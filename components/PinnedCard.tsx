@@ -14,7 +14,7 @@ const PinnedCard = () => {
         <Text fontSize={24} fontWeight={"bold"} color={"black"}>
           Strategy Meeting
         </Text>
-        <Text fontSize={18} color={"black"}>
+        <Text fontSize={16} color={"#4f5d70"}>
           Key takeways from the session: focus on user retention and
           mobile-first experience
         </Text>

@@ -33,7 +33,7 @@ export default function AnalyzingComponent() {
   return (
     <YStack
       flex={1}
-      backgroundColor="#f5f6f8"
+      backgroundColor="$background"
       justifyContent="space-between"
       alignItems="center"
       padding={30}
@@ -55,7 +55,7 @@ export default function AnalyzingComponent() {
             height={160}
             borderRadius={80}
             borderWidth={1}
-            borderColor="#d9def5"
+            borderColor="$borderColor"
           />
 
           {/* Inner Ring */}
@@ -65,7 +65,8 @@ export default function AnalyzingComponent() {
             height={120}
             borderRadius={60}
             borderWidth={1}
-            borderColor="#e3e7ff"
+            borderColor="$borderColor"
+            opacity={0.5}
           />
 
           {/* Rotating Progress Ring */}
@@ -75,18 +76,18 @@ export default function AnalyzingComponent() {
             height={140}
             borderRadius={70}
             borderWidth={3}
-            borderColor="#4c5cff"
+            borderColor="$blue10"
             borderTopColor="transparent"
             borderRightColor="transparent"
             style={rotateStyle}
           />
 
           {/* Mic Icon (centered layer) */}
-          <Mic size={28} color="#4c5cff" />
+          <Mic size={28} color="$blue10" />
         </YStack>
 
         {/* Title */}
-        <Text marginTop={30} fontSize={18} fontWeight="600" color="#1f2937">
+        <Text marginTop={30} fontSize={18} fontWeight="600" color="$color">
           Analyzing your voice...
         </Text>
 
@@ -94,7 +95,7 @@ export default function AnalyzingComponent() {
         <Text
           marginTop={8}
           fontSize={14}
-          color="#9ca3af"
+          color="$color05"
           textAlign="center"
           maxWidth={240}
         >
@@ -103,7 +104,7 @@ export default function AnalyzingComponent() {
       </YStack>
 
       {/* Footer */}
-      <Text marginBottom={10} fontSize={14} fontWeight="600" color="#4c5cff">
+      <Text marginBottom={10} fontSize={14} fontWeight="600" color="$blue10">
         EchoNotes
       </Text>
     </YStack>

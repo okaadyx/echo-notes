@@ -27,14 +27,14 @@ export default function analyzing() {
 
   if (isError) {
     return (
-      <YStack flex={1} justifyContent="center" alignItems="center" padding={24} backgroundColor="#000">
-        <Text color="#ff4d4d" fontSize={20} fontWeight="bold" marginBottom={12}>
+      <YStack flex={1} justifyContent="center" alignItems="center" padding={24} backgroundColor="$background">
+        <Text color="$red10" fontSize={20} fontWeight="bold" marginBottom={12}>
           Analysis Failed
         </Text>
-        <Text color="gray" textAlign="center" marginBottom={24}>
+        <Text color="$color05" textAlign="center" marginBottom={24}>
           {(error as any)?.message || "An unexpected error occurred while analyzing the audio."}
         </Text>
-        <Button backgroundColor="#4F46E5" onPress={() => router.back()}>
+        <Button backgroundColor="$blue10" onPress={() => router.back()}>
           <Text color="white">Go Back</Text>
         </Button>
       </YStack>
@@ -43,16 +43,16 @@ export default function analyzing() {
 
   if (!data) {
     return (
-      <YStack flex={1} justifyContent="center" alignItems="center" padding={24} backgroundColor="#000">
-        <Text color="white" fontSize={18} marginBottom={24}>
+      <YStack flex={1} justifyContent="center" alignItems="center" padding={24} backgroundColor="$background">
+        <Text color="$color" fontSize={18} marginBottom={24}>
           No data was returned from the analysis.
         </Text>
-        <Button backgroundColor="#4F46E5" onPress={() => router.back()}>
+        <Button backgroundColor="$blue10" onPress={() => router.back()}>
           <Text color="white">Go Back</Text>
         </Button>
       </YStack>
     );
   }
 
-  return <PreviewComponent note={data} onSave={() => null} />;
+  return <PreviewComponent note={data} audioUri={params.uri as string} onSave={() => null} />;
 }

@@ -19,11 +19,11 @@ const HeaderComponent = () => {
         height={50}
         width={50}
         borderRadius={50}
-        backgroundColor={"gray"}
+        backgroundColor={"$backgroundFocus"}
         alignItems="center"
         justifyContent="center"
       >
-        <User size={30} />
+        <User size={30} color="$color" />
       </View>
     </XStack>
   );

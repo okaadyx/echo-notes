@@ -1,9 +1,9 @@
+import "@tamagui/native/setup-zeego";
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import "@tamagui/native/setup-zeego";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";

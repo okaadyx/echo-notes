@@ -33,7 +33,7 @@ const FolderComponent = () => {
           Folders
         </Text>
         <TouchableOpacity>
-          <Text fontSize={16} fontWeight={"bold"} color={"#2b67ec"}>
+          <Text fontSize={16} fontWeight={"bold"} color={"$blue10"}>
             View All
           </Text>
         </TouchableOpacity>
@@ -46,7 +46,7 @@ const FolderComponent = () => {
           <View
             height={150}
             width={150}
-            backgroundColor={"white"}
+            backgroundColor={"$backgroundFocus"}
             borderRadius={20}
             padding={20}
             gap={10}
@@ -55,18 +55,18 @@ const FolderComponent = () => {
             <XStack
               height={50}
               width={50}
-              backgroundColor={"#dbeafe"}
+              backgroundColor={"$blue3"}
               alignItems="center"
               borderRadius={12}
               justifyContent="center"
             >
-              <Folder color={"#2563eb"} scale={1.5} />
+              <Folder color={"$blue10"} scale={1.5} />
             </XStack>
             <YStack>
-              <Text fontSize={20} fontWeight={"bold"} color={"black"}>
+              <Text fontSize={20} fontWeight={"bold"} color={"$color"}>
                 {item.name}
               </Text>
-              <Text color={"#96a5b9"}>{item.notes_Count} notes</Text>
+              <Text color={"$color05"}>{item.notes_Count} notes</Text>
             </YStack>
           </View>
         )}

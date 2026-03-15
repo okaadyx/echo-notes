@@ -9,7 +9,7 @@ const FloatingButton = () => {
       position="absolute"
       bottom={90}
       right={25}
-      backgroundColor="#de3737"
+      backgroundColor="$red10"
       width={60}
       height={60}
       borderRadius={30}
@@ -19,7 +19,7 @@ const FloatingButton = () => {
       pressStyle={{ scale: 0.95 }}
       onPress={() => router.push("/screens/recording")}
     >
-      <Mic />
+      <Mic color="white" />
     </YStack>
   );
 };

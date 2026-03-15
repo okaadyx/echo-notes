@@ -32,7 +32,7 @@ export default function PreviewComponent({ note, audioUri, onSave }: Props) {
       <ScrollView flex={1}>
         <YStack padding={20} gap={24}>
           <NoteInfo title={note.title} tags={note.tags} />
-          
+
           <AISummary summary={note.summary} />
 
           <ActionItems items={note.action_items} />
@@ -41,7 +41,6 @@ export default function PreviewComponent({ note, audioUri, onSave }: Props) {
 
           <AudioPlayer uri={audioUri} />
 
-          {/* Save Button */}
           <Button
             backgroundColor="$blue10"
             borderRadius={16}

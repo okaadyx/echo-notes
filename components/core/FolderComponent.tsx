@@ -8,21 +8,29 @@ const MOCK_DATA = [
     id: "1",
     name: "Work",
     notes_Count: 12,
+    color: "$blue10",
+    bg: "$blue3",
   },
   {
     id: "2",
     name: "Personal",
     notes_Count: 4,
+    color: "$purple10",
+    bg: "$purple3",
   },
   {
     id: "3",
     name: "Ideas",
     notes_Count: 24,
+    color: "$orange10",
+    bg: "$yellow3",
   },
   {
     id: "4",
     name: "College",
     notes_Count: 20,
+    color: "$green10",
+    bg: "$green3",
   },
 ];
 const FolderComponent = () => {
@@ -55,12 +63,12 @@ const FolderComponent = () => {
             <XStack
               height={50}
               width={50}
-              backgroundColor={"$blue3"}
+              backgroundColor={item.bg as any}
               alignItems="center"
               borderRadius={12}
               justifyContent="center"
             >
-              <Folder color={"$blue10"} scale={1.5} />
+              <Folder color={item.color as any} scale={1.5} />
             </XStack>
             <YStack>
               <Text fontSize={20} fontWeight={"bold"} color={"$color"}>

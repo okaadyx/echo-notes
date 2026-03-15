@@ -35,7 +35,6 @@ export const AudioPlayer = ({ uri }: AudioPlayerProps) => {
         borderWidth={0}
       >
         <YStack gap={20}>
-          {/* Progress Bar */}
           <YStack gap={8}>
             <XStack
               height={6}
@@ -51,12 +50,15 @@ export const AudioPlayer = ({ uri }: AudioPlayerProps) => {
               />
             </XStack>
             <XStack justifyContent="space-between">
-              <Text fontSize={12} color="$color05">{formatTime(position)}</Text>
-              <Text fontSize={12} color="$color05">{formatTime(duration)}</Text>
+              <Text fontSize={12} color="$color05">
+                {formatTime(position)}
+              </Text>
+              <Text fontSize={12} color="$color05">
+                {formatTime(duration)}
+              </Text>
             </XStack>
           </YStack>
 
-          {/* Controls */}
           <XStack justifyContent="center" alignItems="center" gap={32}>
             <Button
               circular

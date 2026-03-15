@@ -8,7 +8,6 @@ interface NoteInfoProps {
 
 export const NoteInfo = ({ title, tags }: NoteInfoProps) => (
   <YStack gap={24}>
-    {/* Title & Meta */}
     <YStack gap={8}>
       <H3 fontWeight="800" color="$color" lineHeight={32}>
         {title || "Weekly Product Sync: Q3 Strategy"}
@@ -29,7 +28,6 @@ export const NoteInfo = ({ title, tags }: NoteInfoProps) => (
       </XStack>
     </YStack>
 
-    {/* Tags */}
     <XStack flexWrap="wrap" gap={8}>
       {(tags?.length ? tags : ["ProductSync", "Strategy", "Q3"]).map(
         (tag: string, index: number) => (
@@ -48,7 +46,7 @@ export const NoteInfo = ({ title, tags }: NoteInfoProps) => (
               #{tag}
             </Text>
           </XStack>
-        )
+        ),
       )}
       <XStack
         borderWidth={1}

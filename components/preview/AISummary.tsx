@@ -17,8 +17,7 @@ export const AISummary = ({ summary }: AISummaryProps) => (
         </Text>
       </XStack>
       <Paragraph fontSize={14} color="$color" lineHeight={22}>
-        {summary ||
-          "The team discussed the upcoming Q3 product roadmap focusing on the core messaging engine. Sarah highlighted the need for improved latency, while James confirmed that the infrastructure team is ready for the October rollout."}
+        {summary || "No summary available for this note."}
       </Paragraph>
     </YStack>
   </Card>

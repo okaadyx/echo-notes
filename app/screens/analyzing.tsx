@@ -11,9 +11,12 @@ export default function analyzing() {
   const params = useLocalSearchParams();
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["preview"],
+    queryKey: ["preview", params.uri],
     queryFn: () => api.ai.generateNotes(params.uri as string),
     enabled: !!params.uri,
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: "always",
   });
 
   const handleSave = async () => {

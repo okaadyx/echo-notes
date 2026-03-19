@@ -10,7 +10,7 @@ export default class AIApi {
   async generateNotes(uri: string) {
     try {
       const url = `${this.client.defaults.baseURL}ai/generate-notes`;
-      
+
       const response = await FileSystem.uploadAsync(url, uri, {
         httpMethod: 'POST',
         uploadType: 1 as any, // FileSystemUploadType.MULTIPART

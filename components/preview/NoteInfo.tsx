@@ -6,47 +6,55 @@ interface NoteInfoProps {
   tags?: string[];
 }
 
-export const NoteInfo = ({ title, tags }: NoteInfoProps) => (
+export const NoteInfo = ({ title, tags = [] }: NoteInfoProps) => (
   <YStack gap={24}>
     <YStack gap={8}>
       <H3 fontWeight="800" color="$color" lineHeight={32}>
-        {title || "Weekly Product Sync: Q3 Strategy"}
+        {title || "Untitled Note"}
       </H3>
       <XStack gap={16} alignItems="center">
         <XStack alignItems="center" gap={6}>
           <Calendar size={14} color="$color05" />
           <Text color="$color05" fontSize={13}>
-            Oct 24, 2023
+            {new Date().toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })}
           </Text>
         </XStack>
         <XStack alignItems="center" gap={6}>
           <Clock size={14} color="$color05" />
           <Text color="$color05" fontSize={13}>
-            14:32
+            {new Date().toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })}
           </Text>
         </XStack>
       </XStack>
     </YStack>
 
     <XStack flexWrap="wrap" gap={8}>
-      {(tags?.length ? tags : ["ProductSync", "Strategy", "Q3"]).map(
-        (tag: string, index: number) => (
+      {tags?.length > 0 ? (
+        tags.map((tag: string, index: number) => (
           <XStack
             key={index}
-            backgroundColor={index === 2 ? "$backgroundFocus" : "$blue3"}
+            backgroundColor="$blue3"
             paddingHorizontal={12}
             paddingVertical={6}
             borderRadius={20}
           >
-            <Text
-              fontSize={12}
-              fontWeight="600"
-              color={index === 2 ? "$color" : "$blue10"}
-            >
+            <Text fontSize={12} fontWeight="600" color="$blue10">
               #{tag}
             </Text>
           </XStack>
-        ),
+        ))
+      ) : (
+        <Text color="$color05" fontSize={12} fontStyle="italic">
+          No tags
+        </Text>
       )}
       <XStack
         borderWidth={1}

@@ -141,7 +141,6 @@ export default function SplashScreen() {
           </YStack>
         </Animated.View>
 
-        {/* Improved Loading Indicator */}
         <YStack marginTop={50} alignItems="center">
           <YStack
             width={60}

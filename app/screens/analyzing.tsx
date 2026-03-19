@@ -4,6 +4,7 @@ import { api } from "@/services";
 import { useQuery } from "@tanstack/react-query";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect } from "react";
+import { ToastAndroid } from "react-native";
 import { Button, Text, YStack } from "tamagui";
 
 export default function analyzing() {
@@ -14,6 +15,23 @@ export default function analyzing() {
     queryFn: () => api.ai.generateNotes(params.uri as string),
     enabled: !!params.uri,
   });
+
+  const handleSave = async () => {
+    const response = await api.notes.createNotes(data);
+    if (response.status) {
+      ToastAndroid.showWithGravity(
+        "Notes save Successfully",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
+    } else {
+      ToastAndroid.showWithGravity(
+        "Something went Wrong",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
+    }
+  };
 
   useEffect(() => {
     if (isError) {
@@ -27,12 +45,19 @@ export default function analyzing() {
 
   if (isError) {
     return (
-      <YStack flex={1} justifyContent="center" alignItems="center" padding={24} backgroundColor="$background">
+      <YStack
+        flex={1}
+        justifyContent="center"
+        alignItems="center"
+        padding={24}
+        backgroundColor="$background"
+      >
         <Text color="$red10" fontSize={20} fontWeight="bold" marginBottom={12}>
           Analysis Failed
         </Text>
         <Text color="$color05" textAlign="center" marginBottom={24}>
-          {(error as any)?.message || "An unexpected error occurred while analyzing the audio."}
+          {(error as any)?.message ||
+            "An unexpected error occurred while analyzing the audio."}
         </Text>
         <Button backgroundColor="$blue10" onPress={() => router.back()}>
           <Text color="white">Go Back</Text>
@@ -43,7 +68,13 @@ export default function analyzing() {
 
   if (!data) {
     return (
-      <YStack flex={1} justifyContent="center" alignItems="center" padding={24} backgroundColor="$background">
+      <YStack
+        flex={1}
+        justifyContent="center"
+        alignItems="center"
+        padding={24}
+        backgroundColor="$background"
+      >
         <Text color="$color" fontSize={18} marginBottom={24}>
           No data was returned from the analysis.
         </Text>
@@ -54,5 +85,11 @@ export default function analyzing() {
     );
   }
 
-  return <PreviewComponent note={data} audioUri={params.uri as string} onSave={() => null} />;
+  return (
+    <PreviewComponent
+      note={data}
+      audioUri={params.uri as string}
+      onSave={handleSave}
+    />
+  );
 }

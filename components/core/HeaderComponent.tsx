@@ -1,30 +1,34 @@
 import { User } from "@tamagui/lucide-icons";
 import React from "react";
-import { Text, View, XStack, YStack } from "tamagui";
+import { Text, XStack, YStack } from "tamagui";
 
 const HeaderComponent = () => {
   return (
     <XStack
       justifyContent="space-between"
       alignItems="center"
-      marginBottom={20}
+      marginBottom={25}
     >
-      <YStack>
-        <Text fontSize={20} fontWeight={"bold"}>
+      <YStack gap={2}>
+        <Text fontSize={26} fontWeight="800" color="$color">
           Hello, Aady
         </Text>
-        <Text>Ready to capture your thoughts?</Text>
+        <Text fontSize={15} color="$gray11" fontWeight="500">
+          Ready to capture your thoughts?
+        </Text>
       </YStack>
-      <View
-        height={50}
+      <YStack
         width={50}
-        borderRadius={50}
-        backgroundColor={"$backgroundFocus"}
+        height={50}
+        borderRadius={25}
+        backgroundColor="$gray3"
         alignItems="center"
         justifyContent="center"
+        borderWidth={1}
+        borderColor="$gray5"
       >
-        <User size={30} color="$color" />
-      </View>
+        <User size={26} color="$blue9" />
+      </YStack>
     </XStack>
   );
 };

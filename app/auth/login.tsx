@@ -3,152 +3,167 @@ import { Eye, EyeOff } from "@tamagui/lucide-icons";
 import { LogoIcon } from "@/components/core/LogoIcon";
 import { router } from "expo-router";
 import React, { useState } from "react";
+import { ScrollView } from "react-native";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import { Button, Input, Text, XStack, YStack } from "tamagui";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+
   return (
-    <YStack
-      flex={1}
-      backgroundColor="$background"
-      justifyContent="center"
-      padding={20}
-    >
-      <YStack
-        width="100%"
-        maxWidth={360}
-        padding={20}
-        borderRadius={20}
-        backgroundColor="$background"
-      >
-        <LogoIcon tag={"Welcome back, you've been missed!"} />
+    <YStack flex={1} backgroundColor="$background">
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <YStack
+          flex={1}
+          justifyContent="center"
+          paddingHorizontal={30}
+          paddingVertical={40}
+        >
+          <Animated.View entering={FadeInDown.duration(800).delay(200)}>
+            <LogoIcon tag={"Welcome back, you've been missed!"} />
 
-        <YStack gap={12}>
-          <Text fontSize={12} color="$gray10">
-            Full Name
-          </Text>
-          <Input
-            placeholder="John Doe"
-            placeholderTextColor="$placeholderColor"
-            backgroundColor="$gray2"
-            borderRadius={12}
-            onChangeText={setEmail}
-            height={45}
-            borderWidth={1}
-            borderColor="$borderColor"
-            focusStyle={{
-              borderColor: "$blue8",
-            }}
-          />
+            <YStack gap={15}>
+              <YStack gap={6}>
+                <Text
+                  fontSize={13}
+                  fontWeight="600"
+                  color="$gray11"
+                  marginLeft={4}
+                >
+                  Email Address
+                </Text>
+                <Input
+                  value={email || ""}
+                  placeholder="name@example.com"
+                  placeholderTextColor="$gray8"
+                  backgroundColor="$gray2"
+                  borderRadius={14}
+                  height={52}
+                  px={16}
+                  borderWidth={1}
+                  borderColor="$gray4"
+                  focusStyle={{
+                    borderColor: "$blue9",
+                    backgroundColor: "$gray1",
+                  }}
+                  onChangeText={setEmail}
+                />
+              </YStack>
 
-          <Text fontSize={12} color="$gray10">
-            Email Address
-          </Text>
-          <Input
-            value={email || ""}
-            placeholder="name@example.com"
-            placeholderTextColor="$placeholderColor"
-            backgroundColor="$gray2"
-            borderRadius={12}
-            height={45}
-            borderWidth={1}
-            borderColor="$borderColor"
-            focusStyle={{
-              borderColor: "$blue8",
-            }}
-          />
+              <YStack gap={6}>
+                <Text
+                  fontSize={13}
+                  fontWeight="600"
+                  color="$gray11"
+                  marginLeft={4}
+                >
+                  Password
+                </Text>
+                <XStack position="relative" alignItems="center">
+                  <Input
+                    flex={1}
+                    value={password || ""}
+                    placeholder="••••••••"
+                    placeholderTextColor="$gray8"
+                    secureTextEntry={!showPassword}
+                    onChangeText={setPassword}
+                    backgroundColor="$gray2"
+                    borderRadius={14}
+                    height={52}
+                    px={16}
+                    paddingRight={50}
+                    borderWidth={1}
+                    borderColor="$gray4"
+                    focusStyle={{
+                      borderColor: "$blue9",
+                      backgroundColor: "$gray1",
+                    }}
+                  />
+                  <Button
+                    position="absolute"
+                    right={6}
+                    height={40}
+                    width={40}
+                    backgroundColor="transparent"
+                    borderWidth={0}
+                    chromeless
+                    pressStyle={{ backgroundColor: "$gray3", opacity: 0.7 }}
+                    onPress={() => setShowPassword(!showPassword)}
+                    icon={
+                      showPassword ? (
+                        <EyeOff size={20} color="$gray10" />
+                      ) : (
+                        <Eye size={20} color="$gray10" />
+                      )
+                    }
+                  />
+                </XStack>
+              </YStack>
 
-          <Text fontSize={12} color="$gray10">
-            Password
-          </Text>
-          <XStack position="relative" alignItems="center">
-            <Input
-              flex={1}
-              value={password || ""}
-              placeholder="••••••••"
-              placeholderTextColor="$placeholderColor"
-              secureTextEntry={!showPassword}
-              onChangeText={setPassword}
-              backgroundColor="$gray2"
-              borderRadius={12}
-              height={45}
-              paddingRight={45}
-              borderWidth={1}
-              borderColor="$borderColor"
-              focusStyle={{
-                borderColor: "$blue8",
-              }}
-            />
-            <Button
-              position="absolute"
-              right={0}
-              height={45}
-              width={45}
-              backgroundColor="transparent"
-              borderWidth={0}
-              chromeless
-              pressStyle={{ backgroundColor: "transparent", opacity: 0.7 }}
-              onPress={() => setShowPassword(!showPassword)}
-              icon={
-                showPassword ? (
-                  <EyeOff size={20} color="$gray10" />
-                ) : (
-                  <Eye size={20} color="$gray10" />
-                )
-              }
-            />
-          </XStack>
+              <Button
+                marginTop={15}
+                height={54}
+                borderRadius={16}
+                backgroundColor="$blue9"
+                pressStyle={{ scale: 0.98, opacity: 0.9 }}
+              >
+                <Text color="white" fontWeight="700" fontSize={16}>
+                  Sign In
+                </Text>
+              </Button>
 
-          <Button
-            marginTop={10}
-            height={48}
-            borderRadius={14}
-            backgroundColor="$blue9"
-            pressStyle={{ scale: 0.97 }}
-          >
-            <Text color="white" fontWeight="600">
-              Sign In
-            </Text>
-          </Button>
+              <XStack
+                alignItems="center"
+                justifyContent="center"
+                marginVertical={20}
+              >
+                <YStack flex={1} height={1} backgroundColor="$gray5" />
+                <Text
+                  marginHorizontal={15}
+                  fontSize={12}
+                  color="$gray9"
+                  fontWeight="500"
+                >
+                  OR CONTINUE WITH
+                </Text>
+                <YStack flex={1} height={1} backgroundColor="$gray5" />
+              </XStack>
 
-          <XStack
-            alignItems="center"
-            justifyContent="center"
-            marginVertical={10}
-          >
-            <YStack flex={1} height={1} backgroundColor="$gray6" />
-            <Text marginHorizontal={10} fontSize={12} color="$gray9">
-              OR CONTINUE WITH
-            </Text>
-            <YStack flex={1} height={1} backgroundColor="$gray6" />
-          </XStack>
+              <Button
+                height={52}
+                borderRadius={14}
+                backgroundColor="white"
+                borderWidth={1}
+                borderColor="$gray4"
+                pressStyle={{ scale: 0.98, backgroundColor: "$gray1" }}
+                icon={<AntDesign name="google" size={20} color="#EA4335" />}
+              >
+                <Text color="$gray11" fontWeight="600">
+                  Google
+                </Text>
+              </Button>
 
-          <Button
-            height={45}
-            borderRadius={12}
-            backgroundColor="$background"
-            borderWidth={1}
-            borderColor="$borderColor"
-            pressStyle={{ scale: 0.97 }}
-            icon={<AntDesign name="google" size={18} color="$color" />}
-          >
-            <Text color="$color">Google</Text>
-          </Button>
-
-          <Text textAlign="center" fontSize={12} color="$gray10" marginTop={10}>
-            {" Don't have an account? "}
-            <Text
-              color="$blue9"
-              fontWeight="600"
-              onPress={() => router.push("/auth/signup")}
-            >
-              Sign Up
-            </Text>
-          </Text>
+              <Text
+                textAlign="center"
+                fontSize={14}
+                color="$gray10"
+                marginTop={30}
+              >
+                {" Don't have an account? "}
+                <Text
+                  color="$blue9"
+                  fontWeight="700"
+                  onPress={() => router.push("/auth/signup")}
+                >
+                  Sign Up
+                </Text>
+              </Text>
+            </YStack>
+          </Animated.View>
         </YStack>
-      </YStack>
+      </ScrollView>
     </YStack>
   );
 }

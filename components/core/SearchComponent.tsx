@@ -6,20 +6,27 @@ const SearchComponent = () => {
   return (
     <XStack
       borderWidth={1}
-      borderColor={"$borderColor"}
-      borderRadius={12}
-      justifyContent="center"
+      borderColor="$gray4"
+      borderRadius={16}
+      px={16}
       alignItems="center"
-      backgroundColor={"$backgroundFocus"}
+      backgroundColor="$gray2"
+      height={54}
+      focusStyle={{
+        borderColor: "$blue9",
+        backgroundColor: "$gray1",
+      }}
     >
-      <Search color={"$color05"} />
+      <Search size={20} color="$gray9" />
       <Input
-        color={"$color"}
-        placeholder="Search here.."
-        placeholderTextColor="$color05"
-        backgroundColor={"transparent"}
+        flex={1}
+        placeholder="Search your notes..."
+        placeholderTextColor="$gray8"
+        backgroundColor="transparent"
         borderWidth={0}
-        width={"90%"}
+        fontSize={16}
+        color="$color"
+        height="100%"
       />
     </XStack>
   );

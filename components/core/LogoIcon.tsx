@@ -7,24 +7,35 @@ interface Props {
 
 export const LogoIcon = ({ tag }: Props) => {
   return (
-    <YStack alignItems="center" marginBottom={20}>
+    <YStack alignItems="center" marginBottom={30}>
       <YStack
-        width={70}
-        height={70}
-        borderRadius={20}
-        backgroundColor="$blue9"
+        width={80}
+        height={80}
+        borderRadius={24}
+        backgroundColor="#4f46e5"
         justifyContent="center"
         alignItems="center"
-        elevation={6}
+        elevation={12}
+        shadowColor="#000"
+        shadowOffset={{ width: 0, height: 8 }}
+        shadowOpacity={0.2}
+        shadowRadius={15}
       >
-        <Mic size={30} color="white" />
+        <Mic size={38} color="white" />
       </YStack>
 
-      <Text fontSize={22} fontWeight="700" marginTop={12} color="$color">
+      <Text fontSize={28} fontWeight="800" marginTop={16} color="$color">
         EchoNotes
       </Text>
 
-      <Text fontSize={14} color="$gray10" marginTop={4} textAlign="center">
+      <Text
+        fontSize={14}
+        color="$gray10"
+        marginTop={6}
+        textAlign="center"
+        opacity={0.8}
+        maxWidth={250}
+      >
         {tag}
       </Text>
     </YStack>

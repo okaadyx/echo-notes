@@ -25,7 +25,7 @@ export default function LoginScreen() {
     try {
       const user = await api.user.login({ email, password });
 
-      if (!user.status) {
+      if (!user.status && !user.success) {
         setError(user.message || "Login failed");
         return;
       }

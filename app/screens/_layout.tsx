@@ -5,6 +5,7 @@ export default function ScreenLayout() {
     <Stack>
       <Stack.Screen name="recording" options={{ headerShown: false }} />
       <Stack.Screen name="analyzing" options={{ headerShown: false }} />
+      <Stack.Screen name="settings" options={{ headerShown: false }} />
     </Stack>
   );
 }

@@ -27,7 +27,7 @@ export default function SignupScreen() {
     try {
       const response = await api.user.signup({ name, email, password });
 
-      if (!response.status) {
+      if (!response.status && !response.success) {
         setError(response.message || "Signup failed");
         return;
       }

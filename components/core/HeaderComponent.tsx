@@ -1,6 +1,7 @@
 import { api } from "@/services";
 import { User } from "@tamagui/lucide-icons";
 import { useQuery } from "@tanstack/react-query";
+import { router } from "expo-router";
 import React from "react";
 import { Text, XStack, YStack } from "tamagui";
 
@@ -32,6 +33,7 @@ const HeaderComponent = () => {
         justifyContent="center"
         borderWidth={1}
         borderColor="$gray5"
+        onPress={() => router.push("/screens/settings")}
       >
         <User size={26} color="$blue9" />
       </YStack>

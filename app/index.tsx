@@ -1,16 +1,17 @@
+import { queryClient } from "@/lib/QueryClient";
 import { api } from "@/services";
 import { Mic } from "@tamagui/lucide-icons";
 import { router } from "expo-router";
 import * as SecureStore from "expo-secure-store";
 import React, { useEffect } from "react";
 import Animated, {
+  Easing,
   useAnimatedStyle,
   useSharedValue,
   withDelay,
   withRepeat,
-  withTiming,
   withSequence,
-  Easing,
+  withTiming,
 } from "react-native-reanimated";
 import { Text, YStack } from "tamagui";
 
@@ -28,15 +29,15 @@ export default function SplashScreen() {
       withRepeat(
         withTiming(1.1, { duration: 1500, easing: Easing.inOut(Easing.sin) }),
         -1,
-        true
-      )
+        true,
+      ),
     );
 
     // Text animation: fade in and slide up with delay
     textOpacity.value = withDelay(500, withTiming(1, { duration: 800 }));
     textTranslateY.value = withDelay(
       500,
-      withTiming(0, { duration: 800, easing: Easing.out(Easing.quad) })
+      withTiming(0, { duration: 800, easing: Easing.out(Easing.quad) }),
     );
   }, []);
 
@@ -56,8 +57,8 @@ export default function SplashScreen() {
       const splashMinTime = new Promise((resolve) => setTimeout(resolve, 2500));
 
       try {
-        const token = await SecureStore.getItemAsync("token");
         await splashMinTime; // Ensure splash shows for at least 2.5s
+        const token = await SecureStore.getItemAsync("token");
 
         if (!token) {
           router.replace("/auth/login");
@@ -65,12 +66,21 @@ export default function SplashScreen() {
         }
 
         const user = await api.user.getUser();
-        if (!user.status) {
+        if (!user) {
+          await SecureStore.deleteItemAsync("token");
+          queryClient.invalidateQueries({
+            queryKey: ["user"],
+          });
           router.replace("/auth/login");
+
           return;
         }
         router.replace("/(tabs)");
       } catch (error) {
+        await SecureStore.deleteItemAsync("token");
+        queryClient.invalidateQueries({
+          queryKey: ["user"],
+        });
         router.replace("/auth/login");
       }
     };
@@ -83,7 +93,7 @@ export default function SplashScreen() {
         translateX: withRepeat(
           withTiming(40, { duration: 1500, easing: Easing.inOut(Easing.sin) }),
           -1,
-          true
+          true,
         ),
       },
     ],

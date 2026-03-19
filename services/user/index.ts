@@ -23,7 +23,7 @@ export class UserApi {
       const response = await this.client.post("user/signup", data);
       const user = response.data;
 
-      if (user?.status && user?.token) {
+      if ((user?.status || user?.success) && user?.token) {
         await SecureStore.setItemAsync("token", user.token);
       }
 
@@ -35,11 +35,11 @@ export class UserApi {
   }
   async login(data: any) {
     try {
-      const response = await this.client.post("user/login", data);
+      const response = await this.client.post("/user/login", data);
 
       const user = response.data;
 
-      if (user?.status) {
+      if (user?.status || user?.success) {
         await SecureStore.setItemAsync("token", user.token);
       }
 

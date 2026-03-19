@@ -1,6 +1,7 @@
+import { LogoIcon } from "@/components/core/LogoIcon";
+import { api } from "@/services";
 import { AntDesign } from "@expo/vector-icons";
 import { Eye, EyeOff } from "@tamagui/lucide-icons";
-import { LogoIcon } from "@/components/core/LogoIcon";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { ScrollView } from "react-native";
@@ -11,7 +12,31 @@ export default function LoginScreen() {
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const handleLogin = async () => {
+    if (!email?.trim() || !password?.trim()) {
+      setError("Both fields are required");
+      return;
+    }
 
+    setIsLoading(true);
+    setError(null);
+    try {
+      const user = await api.user.login({ email, password });
+
+      if (!user.status) {
+        setError(user.message || "Login failed");
+        return;
+      }
+      console.log("Login successful", user);
+      router.replace("/(tabs)");
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <YStack flex={1} backgroundColor="$background">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -101,16 +126,23 @@ export default function LoginScreen() {
                   />
                 </XStack>
               </YStack>
-
+              {error && (
+                <XStack justifyContent="center">
+                  <Text color={"red"}>{error}</Text>
+                </XStack>
+              )}
               <Button
                 marginTop={15}
                 height={54}
                 borderRadius={16}
                 backgroundColor="$blue9"
                 pressStyle={{ scale: 0.98, opacity: 0.9 }}
+                onPress={handleLogin}
+                disabled={isLoading}
+                opacity={isLoading ? 0.7 : 1}
               >
                 <Text color="white" fontWeight="700" fontSize={16}>
-                  Sign In
+                  {isLoading ? "Signing In..." : "Sign In"}
                 </Text>
               </Button>
 

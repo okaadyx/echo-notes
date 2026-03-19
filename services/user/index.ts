@@ -21,7 +21,13 @@ export class UserApi {
 
   async signup(data: any) {
     try {
-      const user = await this.client.post("/user/signup", data);
+      const response = await this.client.post("/user/signup", data);
+      const user = response.data;
+
+      if (user?.status && user?.token) {
+        await SecureStore.setItemAsync("token", user.token);
+      }
+
       return user;
     } catch (error) {
       console.error("Signup error:", error);

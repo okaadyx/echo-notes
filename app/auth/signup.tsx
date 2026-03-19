@@ -1,6 +1,7 @@
 import { AntDesign } from "@expo/vector-icons";
 import { Eye, EyeOff } from "@tamagui/lucide-icons";
 import { LogoIcon } from "@/components/core/LogoIcon";
+import { api } from "@/services";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { ScrollView } from "react-native";
@@ -12,6 +13,32 @@ export default function SignupScreen() {
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSignup = async () => {
+    if (!name?.trim() || !email?.trim() || !password?.trim()) {
+      setError("All fields are required");
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await api.user.signup({ name, email, password });
+
+      if (!response.status) {
+        setError(response.message || "Signup failed");
+        return;
+      }
+      console.log("Signup successful", response);
+      router.replace("/(tabs)");
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <YStack flex={1} backgroundColor="$background">
@@ -130,15 +157,23 @@ export default function SignupScreen() {
                 </XStack>
               </YStack>
 
+              {error && (
+                <XStack justifyContent="center">
+                  <Text color={"red"}>{error}</Text>
+                </XStack>
+              )}
               <Button
                 marginTop={15}
                 height={54}
                 borderRadius={16}
                 backgroundColor="$blue9"
                 pressStyle={{ scale: 0.98, opacity: 0.9 }}
+                onPress={handleSignup}
+                disabled={isLoading}
+                opacity={isLoading ? 0.7 : 1}
               >
                 <Text color="white" fontWeight="700" fontSize={16}>
-                  Sign Up
+                  {isLoading ? "Signing Up..." : "Sign Up"}
                 </Text>
               </Button>
 

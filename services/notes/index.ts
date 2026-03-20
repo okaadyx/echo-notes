@@ -62,7 +62,7 @@ export class NotesApi {
     }
   }
 
-  async pinToggle(noteId: string) {
+  async pinToggle(noteId: number) {
     try {
       const headers = await this.getAuthHeader();
       const response = await this.client.patch(

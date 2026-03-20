@@ -1,10 +1,18 @@
-import { ChevronLeft, MoreVertical, Share2 } from "@tamagui/lucide-icons";
+import { ChevronLeft, MoreVertical, Pin, Share2 } from "@tamagui/lucide-icons";
 import { Text, XStack } from "tamagui";
 
 interface Props {
   title?: string;
+  pinIcon?: boolean;
+  isPinned?: boolean;
+  handlePinNote: () => void;
 }
-export const NoteHeader = ({ title }: Props) => (
+export const NoteHeader = ({
+  title,
+  pinIcon,
+  handlePinNote,
+  isPinned,
+}: Props) => (
   <XStack
     paddingHorizontal={16}
     paddingVertical={12}
@@ -21,7 +29,16 @@ export const NoteHeader = ({ title }: Props) => (
     </XStack>
     <XStack gap={16}>
       <Share2 size={20} color="$color" />
-      <MoreVertical size={20} color="$color" />
+
+      {pinIcon ? (
+        <Pin
+          size={20}
+          color={isPinned ? "#8b8bf7" : "#ccc"}
+          onPress={handlePinNote}
+        />
+      ) : (
+        <MoreVertical size={20} color="$color" />
+      )}
     </XStack>
   </XStack>
 );

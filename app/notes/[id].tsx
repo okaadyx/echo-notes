@@ -20,8 +20,6 @@ export default function PreviewComponent() {
     queryKey: ["note", id],
     queryFn: () => api.notes.getNote(Number(id)),
   });
-  console.log(data);
-
   const queryClient = useQueryClient();
 
   const handlePinnedNotes = async () => {

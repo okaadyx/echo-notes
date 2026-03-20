@@ -17,9 +17,11 @@ interface NotesCardProps {
 const NotesCard = ({ item }: NotesCardProps) => {
   return (
     <XStack
-      backgroundColor="#ffffff"
+      backgroundColor="$background"
       padding={16}
       borderRadius={12}
+      borderWidth={1}
+      borderColor="$borderColor"
       justifyContent="space-between"
       alignItems="center"
       onPress={() =>
@@ -34,27 +36,27 @@ const NotesCard = ({ item }: NotesCardProps) => {
           height={50}
           width={50}
           borderRadius={16}
-          backgroundColor="#ffedd5"
+          backgroundColor="$orange3"
           alignItems="center"
           justifyContent="center"
         >
-          <Mic color="#8b8bf7ff" />
+          <Mic color="$blue10" />
         </View>
 
         <YStack width={"70%"}>
           <Text
             fontSize={16}
-            color="#0f172a"
+            color="$color"
             fontWeight="bold"
             numberOfLines={1}
           >
             {item.title}
           </Text>
-          <Text color="#6d7c92">{item.type ?? "Text note"}</Text>
+          <Text color="$color05">{item.type ?? "Text note"}</Text>
         </YStack>
       </XStack>
 
-      <Text color="#a7b3c4">{item.date ?? "Yesterday"}</Text>
+      <Text color="$color05">{item.date ?? "Yesterday"}</Text>
     </XStack>
   );
 };

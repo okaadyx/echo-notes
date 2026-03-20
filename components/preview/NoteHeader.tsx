@@ -33,7 +33,7 @@ export const NoteHeader = ({
       {pinIcon ? (
         <Pin
           size={20}
-          color={isPinned ? "#8b8bf7" : "#ccc"}
+          color={isPinned ? "$blue10" : "$gray8"}
           onPress={handlePinNote}
         />
       ) : (

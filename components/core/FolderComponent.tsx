@@ -1,6 +1,6 @@
 import { Folder } from "@tamagui/lucide-icons";
 import React from "react";
-import { FlatList, TouchableOpacity } from "react-native";
+import { ScrollView, TouchableOpacity } from "react-native";
 import { Text, View, XStack, YStack } from "tamagui";
 
 const MOCK_DATA = [
@@ -41,17 +41,19 @@ const FolderComponent = () => {
           Folders
         </Text>
         <TouchableOpacity>
-          <Text fontSize={16} fontWeight={"bold"} color={"#4f46e5"}>
+          <Text fontSize={16} fontWeight={"bold"} color={"$blue10"}>
             View All
           </Text>
         </TouchableOpacity>
       </XStack>
-      <FlatList
+      <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        data={MOCK_DATA}
-        renderItem={({ item }) => (
+        contentContainerStyle={{ gap: 10, marginBottom: 20 }}
+      >
+        {MOCK_DATA.map((item) => (
           <View
+            key={item.id}
             height={150}
             width={150}
             backgroundColor={"$backgroundFocus"}
@@ -77,9 +79,8 @@ const FolderComponent = () => {
               <Text color={"$color05"}>{item.notes_Count} notes</Text>
             </YStack>
           </View>
-        )}
-        contentContainerStyle={{ gap: 10, marginBottom: 20 }}
-      />
+        ))}
+      </ScrollView>
     </YStack>
   );
 };

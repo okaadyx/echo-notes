@@ -28,14 +28,14 @@ const HeaderComponent = () => {
         width={50}
         height={50}
         borderRadius={25}
-        backgroundColor="#f0f2ff"
+        backgroundColor="$backgroundFocus"
         alignItems="center"
         justifyContent="center"
         borderWidth={1}
-        borderColor="#e0e7ff"
+        borderColor="$borderColor"
         onPress={() => router.push("/screens/settings")}
       >
-        <User size={26} color="#4f46e5" />
+        <User size={26} color="$blue10" />
       </YStack>
     </XStack>
   );

@@ -25,7 +25,7 @@ export default function HomeScreen() {
           <SearchComponent />
           <FolderComponent />
           <XStack gap={10} alignItems="center">
-            <StarFull color={"$red10"} />
+            <StarFull color={"#8b8bf7"} />
             <Text fontSize={24} fontWeight={"bold"}>
               Pinned Notes
             </Text>
@@ -39,7 +39,7 @@ export default function HomeScreen() {
             </Text>
           </XStack>
           {isLoading ? (
-            <ActivityIndicator size={"large"} color={"#0000ff"} />
+            <ActivityIndicator size={"large"} color={"#4f46e5"} />
           ) : (
             data?.map((item: any) => (
               <NotesCard key={item.id} item={item} />

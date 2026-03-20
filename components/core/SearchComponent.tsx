@@ -14,7 +14,7 @@ const SearchComponent = () => {
       backgroundColor="$gray2"
       height={54}
       focusStyle={{
-        borderColor: "$blue9",
+        borderColor: "#4f46e5",
         backgroundColor: "$gray1",
       }}
       pressStyle={{
@@ -22,7 +22,7 @@ const SearchComponent = () => {
       }}
       onPress={() => router.push("/screens/search")}
     >
-      <Search size={20} color="$gray9" />
+      <Search size={20} color="#6366f1" />
       <Input
         flex={1}
         placeholder="Search your notes..."

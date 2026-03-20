@@ -5,14 +5,14 @@ import { Text, View, XStack, YStack } from "tamagui";
 const PinnedCard = () => {
   return (
     <View
-      backgroundColor={"#eff6ff"}
+      backgroundColor={"#f0f2ff"}
       minHeight={140}
       padding={16}
       borderRadius={12}
       overflow="hidden"
     >
       <YStack flex={1} justifyContent="space-between" gap={10}>
-        <Text fontSize={24} fontWeight={"bold"} color={"black"}>
+        <Text fontSize={24} fontWeight={"bold"} color={"#1e1b4b"}>
           Strategy Meeting
         </Text>
         <Text fontSize={16} color={"#4f5d70"}>

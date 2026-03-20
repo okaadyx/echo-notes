@@ -41,7 +41,7 @@ const FolderComponent = () => {
           Folders
         </Text>
         <TouchableOpacity>
-          <Text fontSize={16} fontWeight={"bold"} color={"$blue10"}>
+          <Text fontSize={16} fontWeight={"bold"} color={"#4f46e5"}>
             View All
           </Text>
         </TouchableOpacity>

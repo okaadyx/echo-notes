@@ -8,6 +8,10 @@ export class UserApi {
   }
   async getAuthHeader() {
     const token = await SecureStore.getItemAsync("token");
+    if (!token) {
+      console.warn("No token found in SecureStore");
+      return {};
+    }
     return {
       Authorization: `Bearer ${token}`,
     };
@@ -35,7 +39,7 @@ export class UserApi {
   }
   async login(data: any) {
     try {
-      const response = await this.client.post("/user/login", data);
+      const response = await this.client.post("user/login", data);
 
       const user = response.data;
 

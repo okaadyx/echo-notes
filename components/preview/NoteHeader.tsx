@@ -1,7 +1,10 @@
 import { ChevronLeft, MoreVertical, Share2 } from "@tamagui/lucide-icons";
 import { Text, XStack } from "tamagui";
 
-export const NoteHeader = () => (
+interface Props {
+  title?: string;
+}
+export const NoteHeader = ({ title }: Props) => (
   <XStack
     paddingHorizontal={16}
     paddingVertical={12}
@@ -13,7 +16,7 @@ export const NoteHeader = () => (
     <XStack alignItems="center" gap={12}>
       <ChevronLeft size={24} color="$color" />
       <Text fontWeight="600" fontSize={16} color="$color">
-        Note Detail
+        {title}
       </Text>
     </XStack>
     <XStack gap={16}>

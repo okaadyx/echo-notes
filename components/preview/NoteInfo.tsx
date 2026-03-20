@@ -38,19 +38,23 @@ export const NoteInfo = ({ title, tags = [] }: NoteInfoProps) => (
 
     <XStack flexWrap="wrap" gap={8}>
       {tags?.length > 0 ? (
-        tags.map((tag: string, index: number) => (
-          <XStack
-            key={index}
-            backgroundColor="$blue3"
-            paddingHorizontal={12}
-            paddingVertical={6}
-            borderRadius={20}
-          >
-            <Text fontSize={12} fontWeight="600" color="$blue10">
-              #{tag}
-            </Text>
-          </XStack>
-        ))
+        tags.map((tag: any, index: number) => {
+          const tagLabel =
+            typeof tag === "string" ? tag : tag?.name || tag?.text || "";
+          return (
+            <XStack
+              key={index}
+              backgroundColor="$blue3"
+              paddingHorizontal={12}
+              paddingVertical={6}
+              borderRadius={20}
+            >
+              <Text fontSize={12} fontWeight="600" color="$blue10">
+                #{tagLabel}
+              </Text>
+            </XStack>
+          );
+        })
       ) : (
         <Text color="$color05" fontSize={12} fontStyle="italic">
           No tags

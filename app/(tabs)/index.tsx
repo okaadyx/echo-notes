@@ -41,7 +41,7 @@ export default function HomeScreen() {
           {isLoading ? (
             <ActivityIndicator size={"large"} color={"#0000ff"} />
           ) : (
-            data?.data?.map((item: any) => (
+            data?.map((item: any) => (
               <NotesCard key={item.id} item={item} />
             ))
           )}

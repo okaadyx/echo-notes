@@ -1,8 +1,10 @@
 import { Mic } from "@tamagui/lucide-icons";
+import { router } from "expo-router";
 import React from "react";
 import { Text, View, XStack, YStack } from "tamagui";
 
 interface Note {
+  id: string;
   title: string;
   type?: string;
   date?: string;
@@ -20,6 +22,12 @@ const NotesCard = ({ item }: NotesCardProps) => {
       borderRadius={12}
       justifyContent="space-between"
       alignItems="center"
+      onPress={() =>
+        router.push({
+          pathname: "/notes/[id]",
+          params: { id: item.id },
+        })
+      }
     >
       <XStack flex={1} alignItems="center" gap={20}>
         <View

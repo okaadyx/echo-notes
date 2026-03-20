@@ -21,7 +21,7 @@ export default function analyzing() {
 
   const handleSave = async () => {
     const response = await api.notes.createNotes(data);
-    if (response.status) {
+    if (response) {
       ToastAndroid.showWithGravity(
         "Notes save Successfully",
         ToastAndroid.SHORT,

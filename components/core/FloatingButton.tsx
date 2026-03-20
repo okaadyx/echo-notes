@@ -9,7 +9,7 @@ const FloatingButton = () => {
       position="absolute"
       bottom={90}
       right={25}
-      backgroundColor="$red10"
+      backgroundColor="#0000ff"
       width={60}
       height={60}
       borderRadius={30}

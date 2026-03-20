@@ -4,13 +4,19 @@ import HeaderComponent from "@/components/core/HeaderComponent";
 import SearchComponent from "@/components/core/SearchComponent";
 import NotesCard from "@/components/NotesCard";
 import PinnedCard from "@/components/PinnedCard";
+import { api } from "@/services";
 import { StarFull } from "@tamagui/lucide-icons";
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { ScrollView } from "react-native";
+import { ActivityIndicator, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, XStack, YStack } from "tamagui";
 
 export default function HomeScreen() {
+  const { data, isLoading } = useQuery({
+    queryKey: ["notes"],
+    queryFn: () => api.notes.getNotes(),
+  });
   return (
     <YStack flex={1} backgroundColor="$background">
       <SafeAreaView style={{ flex: 1 }}>
@@ -32,8 +38,13 @@ export default function HomeScreen() {
               Recent Notes
             </Text>
           </XStack>
-          <NotesCard />
-          <NotesCard />
+          {isLoading ? (
+            <ActivityIndicator size={"large"} color={"#0000ff"} />
+          ) : (
+            data?.data?.map((item: any) => (
+              <NotesCard key={item.id} item={item} />
+            ))
+          )}
         </ScrollView>
         <FloatingButton />
       </SafeAreaView>

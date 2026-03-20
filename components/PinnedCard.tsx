@@ -6,11 +6,12 @@ const PinnedCard = () => {
   return (
     <View
       backgroundColor={"#eff6ff"}
-      height={150}
+      minHeight={140}
       padding={16}
       borderRadius={12}
+      overflow="hidden"
     >
-      <YStack justifyContent="space-between" gap={10}>
+      <YStack flex={1} justifyContent="space-between" gap={10}>
         <Text fontSize={24} fontWeight={"bold"} color={"black"}>
           Strategy Meeting
         </Text>

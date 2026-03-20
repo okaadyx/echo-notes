@@ -1,3 +1,4 @@
+import SearchComponent from "@/components/header/SearchComponent";
 import { Stack } from "expo-router";
 
 export default function ScreenLayout() {
@@ -6,6 +7,12 @@ export default function ScreenLayout() {
       <Stack.Screen name="recording" options={{ headerShown: false }} />
       <Stack.Screen name="analyzing" options={{ headerShown: false }} />
       <Stack.Screen name="settings" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="search"
+        options={{
+          headerTitle: () => <SearchComponent />,
+        }}
+      />
     </Stack>
   );
 }

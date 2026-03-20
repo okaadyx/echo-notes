@@ -1,4 +1,5 @@
 import { Search } from "@tamagui/lucide-icons";
+import { router } from "expo-router";
 import React from "react";
 import { Input, XStack } from "tamagui";
 
@@ -16,6 +17,10 @@ const SearchComponent = () => {
         borderColor: "$blue9",
         backgroundColor: "$gray1",
       }}
+      pressStyle={{
+        opacity: 0.5,
+      }}
+      onPress={() => router.push("/screens/search")}
     >
       <Search size={20} color="$gray9" />
       <Input
@@ -27,6 +32,7 @@ const SearchComponent = () => {
         fontSize={16}
         color="$color"
         height="100%"
+        disabled
       />
     </XStack>
   );

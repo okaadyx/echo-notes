@@ -9,6 +9,7 @@ import {
   User,
 } from "@tamagui/lucide-icons";
 import { useQuery } from "@tanstack/react-query";
+import { Image } from "expo-image";
 import { router } from "expo-router";
 import * as SecureStore from "expo-secure-store";
 import React, { useState } from "react";
@@ -71,17 +72,15 @@ export default function SettingsScreen() {
         </Text>
       </XStack>
 
-      {/* Profile */}
       <YStack alignItems="center" marginBottom={30}>
         <YStack position="relative">
-          {/* Avatar */}
           <Circle size={80} backgroundColor="$blue9">
-            <Text color="white" fontSize={24} fontWeight="700">
-              JD
-            </Text>
+            <Image
+              source={{ uri: data.avatar_url || "https://i.pravatar.cc/300" }}
+              style={{ height: "100%", width: "100%", borderRadius: 100 }}
+            />
           </Circle>
 
-          {/* Online Indicator */}
           <Circle
             size={14}
             backgroundColor="$green9"
@@ -114,7 +113,6 @@ export default function SettingsScreen() {
         </YStack>
       </YStack>
 
-      {/* ACCOUNT */}
       <Text color="$gray9" fontSize={12} marginBottom={8}>
         ACCOUNT
       </Text>
@@ -126,11 +124,14 @@ export default function SettingsScreen() {
         borderWidth={1}
         borderColor="$borderColor"
       >
-        <SettingItem icon={User} label="Personal Info" />
+        <SettingItem
+          icon={User}
+          label="Personal Info"
+          onPress={() => router.push("/screens/profile")}
+        />
         <SettingItem icon={Lock} label="Security" />
       </YStack>
 
-      {/* PREFERENCES */}
       <Text color="$gray9" fontSize={12} marginTop={20} marginBottom={8}>
         PREFERENCES
       </Text>
@@ -177,7 +178,6 @@ export default function SettingsScreen() {
         </XStack>
       </YStack>
 
-      {/* Logout */}
       <YStack marginTop={20}>
         <XStack
           alignItems="center"
@@ -192,7 +192,6 @@ export default function SettingsScreen() {
         </XStack>
       </YStack>
 
-      {/* Footer */}
       <YStack marginTop="auto" alignItems="center">
         <Text fontSize={12} color="$gray9">
           EchoNotes v2.4.1
@@ -205,13 +204,14 @@ export default function SettingsScreen() {
   );
 }
 
-function SettingItem({ icon: Icon, label }: any) {
+function SettingItem({ icon: Icon, label, onPress }: any) {
   return (
     <>
       <XStack
         justifyContent="space-between"
         alignItems="center"
         paddingVertical={12}
+        onPress={onPress}
       >
         <XStack alignItems="center" gap={10}>
           <Circle size={36} backgroundColor="$blue3">

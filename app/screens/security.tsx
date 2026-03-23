@@ -23,16 +23,10 @@ export default function SecurityScreen() {
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "$background" }}>
-      <YStack
-        flex={1}
-        // backgroundColor="$background"
-        padding={16}
-        marginBottom={80}
-      >
+      <YStack flex={1} padding={16} marginBottom={80}>
         <Text fontSize={13} color="$gray10">
           Manage your account protection and privacy preferences
         </Text>
-        {/* Password Card */}
         <YStack
           marginTop={20}
           padding={16}
@@ -63,7 +57,7 @@ export default function SecurityScreen() {
             Change Password
           </Button>
         </YStack>
-        {/* 2FA Card */}
+
         <YStack
           marginTop={14}
           padding={16}
@@ -77,7 +71,16 @@ export default function SecurityScreen() {
               <Shield size={20} color="$blue9" />
             </Circle>
 
-            <Switch checked={twoFA} onCheckedChange={setTwoFA} />
+            <Switch
+              checked={twoFA}
+              onCheckedChange={setTwoFA}
+              size="$2"
+              activeStyle={{
+                backgroundColor: "$blue3",
+              }}
+            >
+              <Switch.Thumb transition="bouncy" backgroundColor={"$blue10"} />
+            </Switch>
           </XStack>
 
           <Text marginTop={12} fontWeight="600" color="$color">
@@ -89,7 +92,7 @@ export default function SecurityScreen() {
             account.
           </Text>
         </YStack>
-        {/* Security Alerts */}
+
         <Text marginTop={20} fontSize={14} fontWeight="600" color="$color">
           Security Alerts
         </Text>

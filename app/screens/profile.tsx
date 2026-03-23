@@ -11,15 +11,12 @@ import { Button, Input, Text, XStack, YStack } from "tamagui";
 export default function ProfileScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
   const [profileImage, setProfileImage] = useState<string | undefined>(
     undefined,
   );
-  const [loading, setLoading] = useState(false);
-
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["user"],
     queryFn: () => api.user.getUser(),
   });
@@ -108,6 +105,13 @@ export default function ProfileScreen() {
     }
   };
 
+  if (isLoading) {
+    return (
+      <YStack flex={1} justifyContent="center" alignItems="center">
+        <ActivityIndicator size={"large"} />
+      </YStack>
+    );
+  }
   return (
     <YStack flex={1} backgroundColor="$background" padding={24}>
       <YStack alignItems="center" marginTop={20}>

@@ -107,7 +107,13 @@ export default function SettingsScreen() {
           borderRadius={999}
           backgroundColor="$blue3"
         >
-          <Text color="$blue9" fontSize={12} fontWeight="600">
+          <Text
+            color="$ activeStyle={{
+          backgroundColor: '$color6',
+        }}"
+            fontSize={12}
+            fontWeight="600"
+          >
             PREMIUM PLAN
           </Text>
         </YStack>
@@ -159,7 +165,16 @@ export default function SettingsScreen() {
             <Text color="$color">Notifications</Text>
           </XStack>
 
-          <Switch checked={notifications} onCheckedChange={setNotifications} />
+          <Switch
+            checked={notifications}
+            onCheckedChange={setNotifications}
+            size="$2"
+            activeStyle={{
+              backgroundColor: "$blue3",
+            }}
+          >
+            <Switch.Thumb transition="bouncy" backgroundColor={"$blue10"} />
+          </Switch>
         </XStack>
 
         <Separator />

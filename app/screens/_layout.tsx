@@ -12,6 +12,7 @@ export default function ScreenLayout() {
         options={{ title: "Personal Information" }}
       />
       <Stack.Screen name="security" options={{ title: "Security" }} />
+      <Stack.Screen name="password" options={{ title: "Change Password" }} />
       <Stack.Screen
         name="search"
         options={{

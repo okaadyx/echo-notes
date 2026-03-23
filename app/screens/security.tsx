@@ -6,6 +6,7 @@ import {
   Shield,
   Smartphone,
 } from "@tamagui/lucide-icons";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   Button,
@@ -57,6 +58,7 @@ export default function SecurityScreen() {
             backgroundColor="$blue9"
             color="white"
             borderRadius={10}
+            onPress={() => router.push("/screens/password")}
           >
             Change Password
           </Button>

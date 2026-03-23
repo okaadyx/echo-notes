@@ -129,7 +129,11 @@ export default function SettingsScreen() {
           label="Personal Info"
           onPress={() => router.push("/screens/profile")}
         />
-        <SettingItem icon={Lock} label="Security" />
+        <SettingItem
+          icon={Lock}
+          label="Security"
+          onPress={() => router.push("/screens/security")}
+        />
       </YStack>
 
       <Text color="$gray9" fontSize={12} marginTop={20} marginBottom={8}>

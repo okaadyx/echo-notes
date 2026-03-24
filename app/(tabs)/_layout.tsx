@@ -1,6 +1,6 @@
+import { Home, Library } from '@tamagui/lucide-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Home, Library } from '@tamagui/lucide-icons';
 
 export default function TabLayout() {
   return (
@@ -13,6 +13,7 @@ export default function TabLayout() {
           borderTopWidth: 0,
           elevation: 0,
         }
+
       }}>
       <Tabs.Screen
         name="index"

@@ -29,7 +29,7 @@ export default function LoginScreen() {
         setError(user.message || "Login failed");
         return;
       }
-      router.replace("/(tabs)/explore");
+      router.replace("/(tabs)");
     } catch (error: any) {
       setError("Something went wrong. Please try again.");
     } finally {

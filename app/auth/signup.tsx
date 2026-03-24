@@ -1,7 +1,7 @@
-import { AntDesign } from "@expo/vector-icons";
-import { Eye, EyeOff } from "@tamagui/lucide-icons";
 import { LogoIcon } from "@/components/layout";
 import { api } from "@/services";
+import { AntDesign } from "@expo/vector-icons";
+import { Eye, EyeOff } from "@tamagui/lucide-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { ScrollView } from "react-native";
@@ -31,7 +31,7 @@ export default function SignupScreen() {
         setError(response.message || "Signup failed");
         return;
       }
-      router.replace("/(tabs)");
+      router.replace("/auth/login");
     } catch (err) {
       setError("Something went wrong. Please try again.");
     } finally {

@@ -7,7 +7,7 @@ import { Image } from "react-native";
 import { Text, XStack, YStack } from "tamagui";
 
 const HeaderComponent = () => {
-  const { data = [] } = useQuery({
+  const { data } = useQuery({
     queryKey: ["user"],
     queryFn: () => api.user.getUser(),
   });
@@ -36,7 +36,7 @@ const HeaderComponent = () => {
         borderColor="$borderColor"
         onPress={() => router.push("/screens/settings")}
       >
-        {data?.avatar_url?.length !== 0 ? (
+        {data?.avatar_url ? (
           <Image
             source={{ uri: data?.avatar_url }}
             style={{ height: 40, width: 40, borderRadius: 50 }}

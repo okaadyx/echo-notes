@@ -8,9 +8,17 @@ export default class AIApi {
     this.client = client;
   }
 
+  private async getAuthHeader(): Promise<Record<string, string>> {
+    const token = await SecureStore.getItemAsync("token");
+    if (!token) return {};
+    return {
+      Authorization: `Bearer ${token}`,
+    };
+  }
+
   async generateNotes(uri: string) {
     try {
-      const token = await SecureStore.getItemAsync("token");
+      const headers = await this.getAuthHeader();
       const baseURL = this.client.defaults.baseURL || "";
       const url = baseURL.endsWith("/")
         ? `${baseURL}ai/generate-notes`
@@ -23,9 +31,7 @@ export default class AIApi {
         uploadType: 1 as any, // FileSystemUploadType.MULTIPART
         fieldName: "audio",
         mimeType: "audio/mp4",
-        headers: {
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
+        headers,
       });
 
       if (response.status !== 200) {

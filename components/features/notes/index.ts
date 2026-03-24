@@ -5,3 +5,4 @@ export { default as FolderComponent } from "./FolderComponent";
 export { default as CategoryTabs } from "./CategoryTabs";
 export { default as FolderSelector } from "./FolderSelector";
 export { default as Banner } from "./Banner";
+export { default as NoteOptionsModal } from "./NoteOptionsModal";

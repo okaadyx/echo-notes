@@ -8,9 +8,10 @@ import { Note } from "@/types";
 
 interface Props {
   item: Note;
+  onLongPress?: (note: Note) => void;
 }
 
-const PinnedCard = ({ item }: Props) => {
+const PinnedCard = ({ item, onLongPress }: Props) => {
   return (
     <View
       backgroundColor={"$backgroundFocus"}
@@ -26,6 +27,7 @@ const PinnedCard = ({ item }: Props) => {
           params: { id: item.id },
         })
       }
+      onLongPress={() => onLongPress?.(item)}
     >
       <YStack flex={1} justifyContent="space-between" gap={10}>
         <Text

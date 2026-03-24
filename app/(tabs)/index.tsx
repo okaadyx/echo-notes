@@ -1,7 +1,7 @@
 import { FloatingButton, HeaderComponent, SearchButton } from "@/components/layout";
-import { FolderComponent, NotesCard, PinnedCard, Banner } from "@/components/features/notes";
+import { FolderComponent, NotesCard, PinnedCard, Banner, NoteOptionsModal } from "@/components/features/notes";
 import { StarFull } from "@tamagui/lucide-icons";
-import React from "react";
+import React, { useState } from "react";
 import { ActivityIndicator, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, XStack, YStack } from "tamagui";
@@ -9,11 +9,18 @@ import { useNotes } from "@/hooks/use-notes";
 import { Note } from "@/types";
 
 export default function HomeScreen() {
-  const { pinnedNotes, recentNotes, isLoading } = useNotes();
+  const { pinnedNotes, recentNotes, isLoading, togglePin, deleteNote } = useNotes();
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null);
+  const [showOptions, setShowOptions] = useState(false);
 
   const hasPinned = pinnedNotes.length > 0;
   const hasNotes = pinnedNotes.length > 0 || recentNotes.length > 0;
   const starColor = hasPinned ? "$violet10" : "$gray8";
+
+  const handleLongPress = (note: Note) => {
+    setSelectedNote(note);
+    setShowOptions(true);
+  };
 
   return (
     <YStack flex={1} backgroundColor="$background">
@@ -42,7 +49,11 @@ export default function HomeScreen() {
 
                   <YStack gap={10}>
                     {pinnedNotes.map((item: Note) => (
-                      <PinnedCard key={item.id} item={item} />
+                      <PinnedCard 
+                        key={item.id} 
+                        item={item} 
+                        onLongPress={handleLongPress}
+                      />
                     ))}
                   </YStack>
                 </YStack>
@@ -58,7 +69,11 @@ export default function HomeScreen() {
 
                   {recentNotes.length !== 0 ? (
                     recentNotes.map((item: Note) => (
-                      <NotesCard key={item.id} item={item} />
+                      <NotesCard 
+                        key={item.id} 
+                        item={item} 
+                        onLongPress={handleLongPress}
+                      />
                     ))
                   ) : (
                     <XStack justifyContent="center" gap={10}>
@@ -72,6 +87,13 @@ export default function HomeScreen() {
         </ScrollView>
 
         <FloatingButton />
+        <NoteOptionsModal
+          visible={showOptions}
+          onClose={() => setShowOptions(false)}
+          note={selectedNote}
+          onPin={togglePin}
+          onDelete={deleteNote}
+        />
       </SafeAreaView>
     </YStack>
   );

@@ -1,19 +1,50 @@
-import NotesCard from "@/components/features/notes/NotesCard";
+import { NoteOptionsModal, NotesCard } from "@/components/features/notes";
 import { api } from "@/services";
 import { Search } from "@tamagui/lucide-icons";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
 import { ActivityIndicator, FlatList } from "react-native";
 import { useSelector } from "react-redux";
 import { Text, YStack } from "tamagui";
+import { Note } from "@/types";
 
 export default function SearchScreen() {
   const query = useSelector((state: any) => state.query.query);
+  const queryClient = useQueryClient();
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null);
+  const [showOptions, setShowOptions] = useState(false);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["search", query],
     queryFn: () => api.notes.searchNotes(query),
     enabled: !!query?.trim(),
   });
+
+  const handleLongPress = (note: Note) => {
+    setSelectedNote(note);
+    setShowOptions(true);
+  };
+
+  const handlePin = async (id: number) => {
+    try {
+      await api.notes.pinToggle(id);
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
+      queryClient.invalidateQueries({ queryKey: ["search"] });
+    } catch (error) {
+      console.error("Error pinning note:", error);
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await api.notes.deleteNote(id);
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
+      queryClient.invalidateQueries({ queryKey: ["folders"] });
+      queryClient.invalidateQueries({ queryKey: ["search"] });
+    } catch (error) {
+      console.error("Error deleting note:", error);
+    }
+  };
 
   if (!query?.trim()) {
     return (
@@ -55,8 +86,20 @@ export default function SearchScreen() {
       <FlatList
         data={notes}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <NotesCard item={item} />}
+        renderItem={({ item }) => (
+          <NotesCard 
+            item={item} 
+            onLongPress={handleLongPress}
+          />
+        )}
         contentContainerStyle={{ gap: 10 }}
+      />
+      <NoteOptionsModal
+        visible={showOptions}
+        onClose={() => setShowOptions(false)}
+        note={selectedNote}
+        onPin={handlePin}
+        onDelete={handleDelete}
       />
     </YStack>
   );

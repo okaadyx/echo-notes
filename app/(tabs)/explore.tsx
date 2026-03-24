@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, YStack, Spinner, Text } from "tamagui";
 import { ExploreHeader, FloatingButton as ExploreFAB } from "@/components/layout";
-import { CategoryTabs, EnhancedNoteCard } from "@/components/features/notes";
+import { CategoryTabs, EnhancedNoteCard, NoteOptionsModal } from "@/components/features/notes";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Mic } from "@tamagui/lucide-icons";
 import { formatTimeAgo } from "@/lib/dateUtils";
 import { useLocalSearchParams } from "expo-router";
 import { useNotes } from "@/hooks/use-notes";
+import { Note } from "@/types";
 
 export default function TabTwoScreen() {
   const params = useLocalSearchParams();
@@ -19,8 +20,12 @@ export default function TabTwoScreen() {
     toggleSort,
     selectFolder,
     deleteNote,
+    togglePin,
     setActiveFolderId,
   } = useNotes(params.folderId ? Number(params.folderId) : "all");
+
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null);
+  const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
     if (params.folderId) {
@@ -29,6 +34,11 @@ export default function TabTwoScreen() {
       setActiveFolderId("all");
     }
   }, [params.folderId]);
+
+  const handleLongPress = (note: Note) => {
+    setSelectedNote(note);
+    setShowOptions(true);
+  };
 
   return (
     <YStack flex={1} backgroundColor="$background">
@@ -53,6 +63,7 @@ export default function TabTwoScreen() {
                   note={note}
                   icon={note.transcript ? Mic : undefined}
                   onDelete={() => deleteNote(note.id)}
+                  onLongPress={handleLongPress}
                 />
               ))}
               {notes.length === 0 && (
@@ -64,6 +75,13 @@ export default function TabTwoScreen() {
           )}
         </ScrollView>
         <ExploreFAB />
+        <NoteOptionsModal
+          visible={showOptions}
+          onClose={() => setShowOptions(false)}
+          note={selectedNote}
+          onPin={togglePin}
+          onDelete={deleteNote}
+        />
       </SafeAreaView>
     </YStack>
   );

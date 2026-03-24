@@ -80,6 +80,15 @@ export function useNotes(initialFolderId: string | number = "all") {
     }
   }
 
+  const togglePin = async (id: number) => {
+    try {
+      await api.notes.pinToggle(id);
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
+    } catch (error: any) {
+      console.error("Toggle pin error:", error);
+    }
+  };
+
   return {
     notes: filteredAndSortedNotes,
     pinnedNotes,
@@ -92,6 +101,7 @@ export function useNotes(initialFolderId: string | number = "all") {
     toggleSort,
     selectFolder,
     deleteNote,
+    togglePin,
     setActiveFolderId
   };
 }

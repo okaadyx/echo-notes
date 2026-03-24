@@ -8,9 +8,10 @@ import { Note } from "@/types";
 
 interface NotesCardProps {
   item: Note;
+  onLongPress?: (note: Note) => void;
 }
 
-const NotesCard = ({ item }: NotesCardProps) => {
+const NotesCard = ({ item, onLongPress }: NotesCardProps) => {
   return (
     <XStack
       backgroundColor="$background"
@@ -26,6 +27,7 @@ const NotesCard = ({ item }: NotesCardProps) => {
           params: { id: item.id },
         })
       }
+      onLongPress={() => onLongPress?.(item)}
     >
       <XStack flex={1} alignItems="center" gap={20}>
         <View

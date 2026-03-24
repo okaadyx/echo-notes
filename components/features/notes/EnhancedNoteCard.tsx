@@ -9,12 +9,14 @@ import { formatTimeAgo } from "@/lib/dateUtils";
 interface NoteCardProps {
   note: Note;
   onDelete?: () => void;
+  onLongPress?: (note: Note) => void;
   icon?: any;
 }
 
 const EnhancedNoteCard = React.memo(({
   note,
   onDelete,
+  onLongPress,
   icon: IconComponent,
 }: NoteCardProps) => {
   if (!note) return null;
@@ -37,6 +39,7 @@ const EnhancedNoteCard = React.memo(({
           params: { id: id.toString() },
         })
       }
+      onLongPress={() => onLongPress?.(note)}
     >
       <YStack gap={10}>
         <XStack justifyContent="space-between" alignItems="center">
@@ -97,7 +100,9 @@ const EnhancedNoteCard = React.memo(({
               pressStyle={{ backgroundColor: "$backgroundFocus" }}
               onPress={(e) => {
                 e.stopPropagation();
-                if (onDelete) {
+                if (onLongPress) {
+                  onLongPress(note);
+                } else if (onDelete) {
                   Alert.alert(
                     "Delete Note",
                     "Are you sure you want to delete this note?",

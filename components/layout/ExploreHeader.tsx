@@ -1,6 +1,6 @@
 import { Settings2, Calendar } from "@tamagui/lucide-icons";
 import React from "react";
-import { Button, H2, XStack, Text } from "tamagui";
+import { Button, XStack, Text } from "tamagui";
 
 interface ExploreHeaderProps {
   sortBy: "date" | "tags" | null;
@@ -12,12 +12,11 @@ const ExploreHeader = ({ sortBy, onSort }: ExploreHeaderProps) => {
     <XStack
       justifyContent="space-between"
       alignItems="center"
-      paddingHorizontal={20}
       paddingVertical={15}
     >
-      <H2 fontWeight="800" color="$color">
+      <Text fontSize={28} fontWeight="800" color="$color">
         All{"\n"}Notes
-      </H2>
+      </Text>
       <XStack gap={10}>
         <Button
           size="$3"

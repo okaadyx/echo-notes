@@ -4,6 +4,7 @@ import { ScrollView, TouchableOpacity } from "react-native";
 import { Button, XStack, Text, YStack, Spinner, Input, View } from "tamagui";
 import { api } from "@/services";
 import { useQueryClient } from "@tanstack/react-query";
+import { Folder } from "@/types";
 
 interface FolderSelectorProps {
   activeFolderId: number | string | null;
@@ -13,7 +14,7 @@ interface FolderSelectorProps {
 
 const FolderSelector = ({ activeFolderId, onSelectFolder, label = "Select Folder" }: FolderSelectorProps) => {
   const queryClient = useQueryClient();
-  const [folders, setFolders] = useState<any[]>([]);
+  const [folders, setFolders] = useState<Folder[]>([]);
   const [loading, setLoading] = useState(true);
   const [isCreating, setIsCreating] = useState(false);
   const [newFolderName, setNewFolderName] = useState("");
@@ -40,7 +41,7 @@ const FolderSelector = ({ activeFolderId, onSelectFolder, label = "Select Folder
     try {
       setCreateLoading(true);
       const newFolder = await api.notes.createFolder(newFolderName);
-      setFolders((prev: any[]) => [...prev, newFolder]);
+      setFolders((prev: Folder[]) => [...prev, newFolder]);
       onSelectFolder(newFolder.id);
       queryClient.invalidateQueries({ queryKey: ["folders"] });
       setIsCreating(false);
@@ -131,7 +132,7 @@ const FolderSelector = ({ activeFolderId, onSelectFolder, label = "Select Folder
           {loading ? (
             <Spinner size="small" color="$blue10" />
           ) : (
-            folders.map((folder: any) => (
+            folders.map((folder: Folder) => (
               <Button
                 key={folder.id}
                 size="$3"

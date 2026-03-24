@@ -1,27 +1,15 @@
 import { AxiosInstance } from "axios";
-import * as SecureStore from "expo-secure-store";
+import { Note, Folder, ApiResponse } from "@/types";
 
 export class NotesApi {
   client: AxiosInstance;
   constructor(client: AxiosInstance) {
     this.client = client;
   }
-  async getAuthHeader() {
-    const token = await SecureStore.getItemAsync("token");
-    if (!token) {
-      console.warn("No token found in SecureStore");
-      return {};
-    }
-    return {
-      Authorization: `Bearer ${token}`,
-    };
-  }
 
-  async getNotes(params?: { folder_id?: number | string; limit?: number; page?: number }) {
+  async getNotes(params?: { folder_id?: number | string; limit?: number; page?: number }): Promise<Note[]> {
     try {
-      const headers = await this.getAuthHeader();
-      const response = await this.client.get("notes/", { 
-        headers,
+      const response = await this.client.get<ApiResponse<Note[]>>("notes/", { 
         params
       });
       return response.data.data;
@@ -31,12 +19,10 @@ export class NotesApi {
     }
   }
 
-  async searchNotes(query: string) {
+  async searchNotes(query: string): Promise<Note[]> {
     try {
-      const headers = await this.getAuthHeader();
-      const response = await this.client.get("notes/search", {
+      const response = await this.client.get<ApiResponse<Note[]>>("notes/search", {
         params: { q: query },
-        headers: headers,
       });
       return response.data.data;
     } catch (error) {
@@ -44,49 +30,43 @@ export class NotesApi {
       throw error;
     }
   }
-  async createNotes(data: any) {
+
+  async createNotes(data: Partial<Note>): Promise<Note> {
     try {
-      const headers = await this.getAuthHeader();
-      const response = await this.client.post("notes/", data, { headers });
-      return response.data.data || [];
+      const response = await this.client.post<ApiResponse<Note>>("notes/", data);
+      return response.data.data;
     } catch (error) {
       console.error("creating notes error:", error);
       throw error;
     }
   }
-  async getNote(id: number) {
+
+  async getNote(id: number): Promise<Note> {
     try {
-      const headers = await this.getAuthHeader();
-      const response = await this.client.get(`notes/${id}`, { headers });
+      const response = await this.client.get<ApiResponse<Note>>(`notes/${id}`);
       return response.data.data;
     } catch (error) {
-      console.error("fetching notes error:", error);
+      console.error("fetching note error:", error);
       throw error;
     }
   }
 
-  async pinToggle(noteId: number) {
+  async pinToggle(noteId: number): Promise<ApiResponse<Note>> {
     try {
-      const headers = await this.getAuthHeader();
-      const response = await this.client.patch(
+      const response = await this.client.patch<ApiResponse<Note>>(
         `notes/${noteId}/favorite`,
         {},
-        { headers },
       );
-
-      return response.data.data;
+      return response.data;
     } catch (error) {
-      console.error("Update error:", error);
+      console.error("Error toggling favorite:", error);
       throw error;
     }
   }
 
-
-  async updateNote(id: number, data: any) {
+  async updateNote(id: number, data: Partial<Note>): Promise<Note> {
     try {
-      const headers = await this.getAuthHeader();
-      // Changed from patch to put to match backend
-      const response = await this.client.put(`notes/${id}`, data, { headers });
+      const response = await this.client.put<ApiResponse<Note>>(`notes/${id}`, data);
       return response.data.data;
     } catch (error) {
       console.error("update note error:", error);
@@ -94,10 +74,9 @@ export class NotesApi {
     }
   }
 
-  async getFolders() {
+  async getFolders(): Promise<Folder[]> {
     try {
-      const headers = await this.getAuthHeader();
-      const response = await this.client.get("folders/", { headers });
+      const response = await this.client.get<ApiResponse<Folder[]>>("folders/");
       return response.data.data;
     } catch (error) {
       console.error("get folders error:", error);
@@ -105,10 +84,9 @@ export class NotesApi {
     }
   }
 
-  async createFolder(name: string) {
+  async createFolder(name: string): Promise<Folder> {
     try {
-      const headers = await this.getAuthHeader();
-      const response = await this.client.post("folders/", { name }, { headers });
+      const response = await this.client.post<ApiResponse<Folder>>("folders/", { name });
       return response.data.data;
     } catch (error) {
       console.error("create folder error:", error);
@@ -116,21 +94,18 @@ export class NotesApi {
     }
   }
 
-  async deleteFolder(id: number) {
+  async deleteFolder(id: number): Promise<void> {
     try {
-      const headers = await this.getAuthHeader();
-      const response = await this.client.delete(`folders/${id}`, { headers });
-      return response.data.data;
+      await this.client.delete(`folders/${id}`);
     } catch (error) {
       console.error("delete folder error:", error);
       throw error;
     }
   }
 
-  async updateFolder(id: number, name: string) {
+  async updateFolder(id: number, name: string): Promise<Folder> {
     try {
-      const headers = await this.getAuthHeader();
-      const response = await this.client.put(`folders/${id}`, { name }, { headers });
+      const response = await this.client.put<ApiResponse<Folder>>(`folders/${id}`, { name });
       return response.data.data;
     } catch (error) {
       console.error("update folder error:", error);
@@ -138,10 +113,9 @@ export class NotesApi {
     }
   }
 
-  async chatWithAi(prompt: string, context?: any) {
+  async chatWithAi(prompt: string, context?: any): Promise<any> {
     try {
-      const headers = await this.getAuthHeader();
-      const response = await this.client.post("ai/chat", { prompt, context }, { headers });
+      const response = await this.client.post<ApiResponse<any>>("ai/chat", { prompt, context });
       return response.data.data;
     } catch (error) {
       console.error("chat with AI error:", error);
@@ -149,10 +123,9 @@ export class NotesApi {
     }
   }
 
-  async generateStructuredNote(prompt: string) {
+  async generateStructuredNote(prompt: string): Promise<any> {
     try {
-      const headers = await this.getAuthHeader();
-      const response = await this.client.post("ai/generate-structured-note", { prompt }, { headers });
+      const response = await this.client.post<ApiResponse<any>>("ai/generate-structured-note", { prompt });
       return response.data.data;
     } catch (error) {
       console.error("generate structured note error:", error);
@@ -160,11 +133,9 @@ export class NotesApi {
     }
   }
 
-  async deleteNote(id: number) {
+  async deleteNote(id: number): Promise<void> {
     try {
-      const headers = await this.getAuthHeader();
-      const response = await this.client.delete(`notes/${id}`, { headers });
-      return response.data;
+      await this.client.delete(`notes/${id}`);
     } catch (error) {
       console.error("delete note error:", error);
       throw error;

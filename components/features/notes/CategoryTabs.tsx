@@ -17,7 +17,6 @@ const CategoryTabs = ({ categories, activeCategoryId, onSelectCategory }: Catego
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
-      paddingHorizontal={20}
       marginBottom={20}
     >
       <XStack gap={10}>

@@ -1,10 +1,11 @@
-import { Folder, MoreVertical, Plus, Pencil, Trash2, X } from "@tamagui/lucide-icons";
+import { Folder as FolderIcon, MoreVertical, Plus, Pencil, Trash2, X } from "@tamagui/lucide-icons";
 import React, { useState } from "react";
 import { ScrollView, TouchableOpacity, Alert, Modal, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { Text, View, XStack, YStack, Spinner, Button, Input } from "tamagui";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/services";
 import { useRouter } from "expo-router";
+import { Folder } from "@/types";
 
 const getFolderStyles = (name: string) => {
   switch (name.toLowerCase()) {
@@ -24,14 +25,14 @@ const getFolderStyles = (name: string) => {
 const FolderComponent = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const [selectedFolder, setSelectedFolder] = useState<any>(null);
+  const [selectedFolder, setSelectedFolder] = useState<Folder | null>(null);
   const [showOptions, setShowOptions] = useState(false);
   const [showRename, setShowRename] = useState(false);
   const [showCreate, setShowCreate] = useState(false);
   const [newName, setNewName] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { data: folders = [], isLoading, isError } = useQuery({
+  const { data: folders = [], isLoading, isError } = useQuery<Folder[]>({
     queryKey: ["folders"],
     queryFn: () => api.notes.getFolders(),
   });
@@ -59,7 +60,7 @@ const FolderComponent = () => {
   };
 
   const handleRename = async () => {
-    if (!newName.trim()) return;
+    if (!newName.trim() || !selectedFolder) return;
     try {
       setLoading(true);
       await api.notes.updateFolder(selectedFolder.id, newName);
@@ -75,6 +76,7 @@ const FolderComponent = () => {
   };
 
   const handleDelete = async () => {
+    if (!selectedFolder) return;
     Alert.alert(
       "Delete Folder",
       `Are you sure you want to delete "${selectedFolder.name}"? The notes will NOT be deleted.`,
@@ -125,7 +127,7 @@ const FolderComponent = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ gap: 10, paddingBottom: 10 }}
         >
-          {folders.map((folder: any) => {
+          {folders.map((folder: Folder) => {
             const styles = getFolderStyles(folder.name);
             return (
               <TouchableOpacity 
@@ -164,14 +166,14 @@ const FolderComponent = () => {
                     borderRadius={12}
                     justifyContent="center"
                   >
-                    <Folder color={styles.color as any} scale={1.5} />
+                    <FolderIcon color={styles.color as any} scale={1.5} />
                   </XStack>
                   <YStack>
                     <Text fontSize={20} fontWeight={"bold"} color={"$color"} numberOfLines={1}>
                       {folder.name}
                     </Text>
                     <Text color={"$color10"} fontSize={14}>
-                      {folder._count?.notes || 0} notes
+                      {(folder as any)._count?.notes || 0} notes
                     </Text>
                   </YStack>
                 </View>
@@ -210,8 +212,10 @@ const FolderComponent = () => {
 
                 <TouchableOpacity 
                   onPress={() => { 
-                    setNewName(selectedFolder.name); 
-                    setShowRename(true); 
+                    if (selectedFolder) {
+                      setNewName(selectedFolder.name); 
+                      setShowRename(true); 
+                    }
                   }}
                   style={styles.optionButton}
                 >

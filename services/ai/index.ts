@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
 import * as FileSystem from "expo-file-system/legacy";
+import * as SecureStore from "expo-secure-store";
 
 export default class AIApi {
   client: AxiosInstance;
@@ -9,6 +10,7 @@ export default class AIApi {
 
   async generateNotes(uri: string) {
     try {
+      const token = await SecureStore.getItemAsync("token");
       const baseURL = this.client.defaults.baseURL || "";
       const url = baseURL.endsWith("/")
         ? `${baseURL}ai/generate-notes`
@@ -21,6 +23,9 @@ export default class AIApi {
         uploadType: 1 as any, // FileSystemUploadType.MULTIPART
         fieldName: "audio",
         mimeType: "audio/mp4",
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
       });
 
       if (response.status !== 200) {

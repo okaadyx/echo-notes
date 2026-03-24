@@ -9,12 +9,14 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ScrollView, Text, YStack } from "tamagui";
 import FolderSelector from "@/components/features/notes/FolderSelector";
 
+import { Note } from "@/types";
+
 export default function PreviewComponent() {
   const insets = useSafeAreaInsets();
   const { id } = useLocalSearchParams();
   const queryClient = useQueryClient();
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError } = useQuery<Note>({
     queryKey: ["note", id],
     queryFn: () => api.notes.getNote(Number(id)),
   });

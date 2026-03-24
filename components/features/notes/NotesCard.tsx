@@ -4,12 +4,7 @@ import { router } from "expo-router";
 import React from "react";
 import { Text, View, XStack, YStack } from "tamagui";
 
-interface Note {
-  id: string;
-  title: string;
-  type?: string;
-  created_at?: string;
-}
+import { Note } from "@/types";
 
 interface NotesCardProps {
   item: Note;

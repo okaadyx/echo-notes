@@ -6,29 +6,12 @@ import { ActivityIndicator, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, XStack, YStack } from "tamagui";
 import { useNotes } from "@/hooks/use-notes";
+import { Note } from "@/types";
 
 export default function HomeScreen() {
-  const { notes, isLoading } = useNotes();
+  const { pinnedNotes, recentNotes, isLoading } = useNotes();
 
-  const sortedData = React.useMemo(() => {
-    return [...notes].sort((a: any, b: any) => {
-      const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
-      const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
-      return dateB - dateA;
-    });
-  }, [notes]);
-
-  const pinnedData = React.useMemo(() => {
-    return notes
-      .filter((item: any) => item.is_favorite === true)
-      .sort((a: any, b: any) => {
-        const dateA = a.updated_at ? new Date(a.updated_at).getTime() : 0;
-        const dateB = b.updated_at ? new Date(b.updated_at).getTime() : 0;
-        return dateB - dateA;
-      });
-  }, [notes]);
-
-  const hasPinned = pinnedData.length > 0;
+  const hasPinned = pinnedNotes.length > 0;
   const starColor = hasPinned ? "$violet10" : "$gray8";
 
   return (
@@ -49,7 +32,7 @@ export default function HomeScreen() {
               </XStack>
 
               <YStack gap={10}>
-                {pinnedData.map((item: any) => (
+                {pinnedNotes.map((item: Note) => (
                   <PinnedCard key={item.id} item={item} />
                 ))}
               </YStack>
@@ -64,8 +47,8 @@ export default function HomeScreen() {
 
           {isLoading ? (
             <ActivityIndicator size={"large"} color={"$blue10"} />
-          ) : sortedData.length !== 0 ? (
-            sortedData.map((item: any) => <NotesCard key={item.id} item={item} />)
+          ) : recentNotes.length !== 0 ? (
+            recentNotes.map((item: Note) => <NotesCard key={item.id} item={item} />)
           ) : (
             <XStack justifyContent="center" gap={10}>
               <ActivityIndicator size={"small"} color={"$blue10"} />

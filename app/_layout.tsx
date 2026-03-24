@@ -16,6 +16,7 @@ import { queryClient } from "@/lib/QueryClient";
 import { Provider } from "react-redux";
 import { TamaguiProvider, PortalProvider } from "tamagui";
 import { config } from "../tamagui.config";
+import ErrorBoundary from "@/components/ui/ErrorBoundary";
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -25,34 +26,36 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <SafeAreaProvider>
-          <TamaguiProvider
-            config={config}
-            defaultTheme={colorScheme === "dark" ? "dark" : "light"}
-          >
-            <PortalProvider>
-              <ThemeProvider
-                value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-              >
-                <Stack>
-                  <Stack.Screen name="index" options={{ headerShown: false }} />
-                  <Stack.Screen name="auth" options={{ headerShown: false }} />
-                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                  <Stack.Screen name="screens" options={{ headerShown: false }} />
-                  <Stack.Screen name="notes" options={{ headerShown: false }} />
-                  <Stack.Screen
-                    name="modal"
-                    options={{ presentation: "modal", title: "Modal" }}
-                  />
-                </Stack>
-                <StatusBar style="auto" />
-              </ThemeProvider>
-            </PortalProvider>
-          </TamaguiProvider>
-        </SafeAreaProvider>
-      </Provider>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <SafeAreaProvider>
+            <TamaguiProvider
+              config={config}
+              defaultTheme={colorScheme === "dark" ? "dark" : "light"}
+            >
+              <PortalProvider>
+                <ThemeProvider
+                  value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+                >
+                  <Stack>
+                    <Stack.Screen name="index" options={{ headerShown: false }} />
+                    <Stack.Screen name="auth" options={{ headerShown: false }} />
+                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                    <Stack.Screen name="screens" options={{ headerShown: false }} />
+                    <Stack.Screen name="notes" options={{ headerShown: false }} />
+                    <Stack.Screen
+                      name="modal"
+                      options={{ presentation: "modal", title: "Modal" }}
+                    />
+                  </Stack>
+                  <StatusBar style="auto" />
+                </ThemeProvider>
+              </PortalProvider>
+            </TamaguiProvider>
+          </SafeAreaProvider>
+        </Provider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }

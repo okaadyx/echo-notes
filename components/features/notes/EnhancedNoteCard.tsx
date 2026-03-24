@@ -2,47 +2,39 @@ import { MoreVertical, Sparkles, Star } from "@tamagui/lucide-icons";
 import { router } from "expo-router";
 import React from "react";
 import { Alert, View } from "react-native";
-import { Button, Card, H4, Paragraph, Text, XStack, YStack } from "tamagui";
+import { Button, Card, Text, XStack, YStack } from "tamagui";
+import { Note, Tag } from "@/types";
+import { formatTimeAgo } from "@/lib/dateUtils";
 
 interface NoteCardProps {
-  id: number;
-  title: string;
-  summary: string;
-  date: string;
-  tags: any[];
-  isPinned?: boolean;
-  accentColor?: string;
-  icon?: any;
+  note: Note;
   onDelete?: () => void;
+  icon?: any;
 }
 
-const EnhancedNoteCard = ({
-  id,
-  title,
-  summary,
-  date,
-  tags,
-  isPinned,
-  accentColor,
-  icon: IconComponent,
+const EnhancedNoteCard = React.memo(({
+  note,
   onDelete,
+  icon: IconComponent,
 }: NoteCardProps) => {
+  if (!note) return null;
+  const { id, title, summary, created_at, tags, is_favorite, accent_color } = note;
+
   return (
     <Card
       elevation={4}
       size="$4"
-      marginHorizontal={20}
       marginBottom={15}
       backgroundColor="$background"
       borderRadius={20}
       padding={15}
-      borderLeftWidth={accentColor ? 4 : 1}
-      borderLeftColor={accentColor || "$borderColor"}
+      borderLeftWidth={accent_color ? 4 : 1}
+      borderLeftColor={accent_color || "$borderColor"}
       pressStyle={{ scale: 0.98 }}
       onPress={() =>
         router.push({
           pathname: "/notes/[id]",
-          params: { id: id },
+          params: { id: id.toString() },
         })
       }
     >
@@ -50,17 +42,17 @@ const EnhancedNoteCard = ({
         <XStack justifyContent="space-between" alignItems="center">
           <View />
           <Text fontSize={12} color="$color10">
-            {date}
+            {formatTimeAgo(created_at)}
           </Text>
         </XStack>
 
         <YStack gap={5}>
-          <H4 fontWeight="700" color="$color">
+          <Text fontSize={20} fontWeight="700" color="$color">
             {String(title)}
-          </H4>
-          <Paragraph size="$3" color="$color11" numberOfLines={3} lineHeight={18}>
+          </Text>
+          <Text fontSize={14} color="$color11" numberOfLines={3} lineHeight={18}>
             {String(summary)}
-          </Paragraph>
+          </Text>
         </YStack>
 
         <XStack
@@ -92,7 +84,7 @@ const EnhancedNoteCard = ({
           </XStack>
 
           <XStack gap={8} alignItems="center" flexShrink={0} marginLeft="auto">
-            {isPinned && <Star size={16} color="$blue10" fill="$blue10" />}
+            {is_favorite && <Star size={16} color="$blue10" fill="$blue10" />}
             {IconComponent && <IconComponent size={16} color="$blue10" />}
             <Button
               size="$2"
@@ -122,6 +114,6 @@ const EnhancedNoteCard = ({
       </YStack>
     </Card>
   );
-};
+});
 
 export default EnhancedNoteCard;

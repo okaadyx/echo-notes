@@ -1,5 +1,5 @@
 import { Sparkles } from "@tamagui/lucide-icons";
-import { Card, Paragraph, Text, XStack, YStack } from "tamagui";
+import { Card, Text, XStack, YStack } from "tamagui";
 
 interface AISummaryProps {
   summary?: string;
@@ -16,9 +16,9 @@ const AISummary = ({ summary }: AISummaryProps) => (
           AI SUMMARY
         </Text>
       </XStack>
-      <Paragraph fontSize={14} color="$color" lineHeight={22}>
+      <Text fontSize={14} color="$color" lineHeight={22}>
         {summary || "No summary available for this note."}
-      </Paragraph>
+      </Text>
     </YStack>
   </Card>
 );

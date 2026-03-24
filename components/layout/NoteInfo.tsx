@@ -1,17 +1,18 @@
 import { Calendar, Clock, Plus } from "@tamagui/lucide-icons";
-import { H3, Text, XStack, YStack } from "tamagui";
+import { Text, XStack, YStack } from "tamagui";
+import { Tag } from "@/types";
 
 interface NoteInfoProps {
   title?: string;
-  tags?: string[];
+  tags?: string[] | Tag[];
 }
 
 const NoteInfo = ({ title, tags = [] }: NoteInfoProps) => (
   <YStack gap={24}>
     <YStack gap={8}>
-      <H3 fontWeight="800" color="$color" lineHeight={32}>
+      <Text fontSize={24} fontWeight="800" color="$color" lineHeight={32}>
         {title || "Untitled Note"}
-      </H3>
+      </Text>
       <XStack gap={16} alignItems="center">
         <XStack alignItems="center" gap={6}>
           <Calendar size={14} color="$color05" />

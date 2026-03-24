@@ -1,67 +1,40 @@
 import { AxiosInstance } from "axios";
-import * as SecureStore from "expo-secure-store";
+import { User, ApiResponse } from "@/types";
 
 export class UserApi {
   client: AxiosInstance;
   constructor(client: AxiosInstance) {
     this.client = client;
   }
-  async getAuthHeader() {
-    const token = await SecureStore.getItemAsync("token");
-    if (!token) {
-      console.warn("No token found in SecureStore");
-      return {};
-    }
-    return {
-      Authorization: `Bearer ${token}`,
-    };
-  }
 
-  async getUser() {
-    const headers = await this.getAuthHeader();
-    const response = await this.client.get("user/", { headers });
+  async getUser(): Promise<User> {
+    const response = await this.client.get<ApiResponse<User>>("user/");
     return response.data.data;
   }
-  async signup(data: any) {
+
+  async signup(data: any): Promise<any> {
     try {
       const response = await this.client.post("user/signup", data);
-      const user = response.data;
-
-      if ((user?.status || user?.success) && user?.token) {
-        await SecureStore.setItemAsync("token", user.token);
-      }
-
-      return user;
+      return response.data;
     } catch (error) {
       console.error("Signup error:", error);
       throw error;
     }
   }
-  async login(data: any) {
+
+  async login(data: any): Promise<any> {
     try {
       const response = await this.client.post("user/login", data);
-
-      const user = response.data;
-
-      if (user?.status || user?.success) {
-        await SecureStore.setItemAsync("token", user.token);
-      }
-
-      return user;
+      return response.data;
     } catch (error) {
       console.error("Login error:", error);
       throw error;
     }
   }
 
-  async update(data: any) {
+  async update(data: Partial<User>): Promise<ApiResponse<User>> {
     try {
-      const headers = await this.getAuthHeader();
-
-      const response = await this.client.put("user/update", data, {
-        headers,
-      });
-
+      const response = await this.client.put<ApiResponse<User>>("user/update", data);
       return response.data;
     } catch (error) {
       console.error("Update error:", error);

@@ -4,16 +4,10 @@ import { router } from "expo-router";
 import React from "react";
 import { Text, View, XStack, YStack } from "tamagui";
 
-interface PinnedProps {
-  id: string;
-  title: string;
-  summary: string;
-  created_at?: string;
-  updated_at?: string;
-}
+import { Note } from "@/types";
 
 interface Props {
-  item: PinnedProps;
+  item: Note;
 }
 
 const PinnedCard = ({ item }: Props) => {

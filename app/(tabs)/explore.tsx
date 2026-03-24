@@ -31,9 +31,9 @@ export default function TabTwoScreen() {
   }, [params.folderId]);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "transparent" }}>
-      <YStack flex={1} backgroundColor="$background">
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
+    <YStack flex={1} backgroundColor="$background">
+      <SafeAreaView style={{ flex: 1 }}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 16, paddingBottom: 100, gap: 10 }}>
           <ExploreHeader sortBy={sortBy} onSort={toggleSort} />
           <CategoryTabs 
             categories={categories} 
@@ -50,13 +50,7 @@ export default function TabTwoScreen() {
               {notes.map((note: any) => (
                 <EnhancedNoteCard 
                   key={note.id} 
-                  id={note.id}
-                  title={note.title || "Untitled"}
-                  summary={note.summary || note.transcript || "No content available"}
-                  date={formatTimeAgo(note.created_at)}
-                  tags={note.tags || []}
-                  isPinned={note.is_favorite}
-                  accentColor={note.is_favorite ? "$blue10" : undefined}
+                  note={note}
                   icon={note.transcript ? Mic : undefined}
                   onDelete={() => deleteNote(note.id)}
                 />
@@ -70,7 +64,7 @@ export default function TabTwoScreen() {
           )}
         </ScrollView>
         <ExploreFAB />
-      </YStack>
-    </SafeAreaView>
+      </SafeAreaView>
+    </YStack>
   );
 }

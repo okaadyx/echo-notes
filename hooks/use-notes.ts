@@ -1,25 +1,26 @@
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/services";
+import { Note, Folder } from "@/types";
 
 export function useNotes(initialFolderId: string | number = "all") {
   const queryClient = useQueryClient();
   const [sortBy, setSortBy] = useState<"date" | "tags" | null>(null);
   const [activeFolderId, setActiveFolderId] = useState<string | number>(initialFolderId);
 
-  const { data: notes = [], isLoading: isLoadingNotes } = useQuery({
+  const { data: notes = [], isLoading: isLoadingNotes } = useQuery<Note[]>({
     queryKey: ["notes"],
     queryFn: () => api.notes.getNotes(),
   });
 
-  const { data: folders = [], isLoading: isLoadingFolders } = useQuery({
+  const { data: folders = [], isLoading: isLoadingFolders } = useQuery<Folder[]>({
     queryKey: ["folders"],
     queryFn: () => api.notes.getFolders(),
   });
 
   const categories = useMemo(() => {
     const base = [{ id: "all", name: "All Notes" }];
-    const folderCats = folders.map((f: any) => ({ id: f.id, name: f.name }));
+    const folderCats = folders.map((f: Folder) => ({ id: f.id, name: f.name }));
     return [...base, ...folderCats];
   }, [folders]);
 
@@ -28,7 +29,7 @@ export function useNotes(initialFolderId: string | number = "all") {
 
     // Filter by Folder
     if (activeFolderId !== "all") {
-      result = result.filter((note: any) => note.folder_id === activeFolderId);
+      result = result.filter((note: Note) => note.folder_id === activeFolderId);
     }
 
     if (sortBy === "date") {
@@ -40,14 +41,33 @@ export function useNotes(initialFolderId: string | number = "all") {
     return result;
   }, [notes, activeFolderId, sortBy]);
 
+  const pinnedNotes = useMemo(() => {
+    return notes
+      .filter((item: Note) => item.is_favorite === true)
+      .sort((a, b) => {
+        const dateA = a.updated_at ? new Date(a.updated_at).getTime() : 0;
+        const dateB = b.updated_at ? new Date(b.updated_at).getTime() : 0;
+        return dateB - dateA;
+      });
+  }, [notes]);
+
+  const recentNotes = useMemo(() => {
+    return [...filteredAndSortedNotes].sort((a, b) => {
+      const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+      const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+      return dateB - dateA;
+    });
+  }, [filteredAndSortedNotes]);
+
   const toggleSort = (type: "date" | "tags") => {
     setSortBy(prev => prev === type ? null : type);
   };
 
   const selectFolder = (id: string | number) => {
     setActiveFolderId(id);
+    // Note: We don't always need to invalidate everything if we use specific query keys per folder
+    // but for now keeping it simple as per existing logic.
     queryClient.invalidateQueries({ queryKey: ["notes"] });
-    queryClient.invalidateQueries({ queryKey: ["folders"] });
   };
 
   const deleteNote = async (id: number) => {
@@ -58,10 +78,12 @@ export function useNotes(initialFolderId: string | number = "all") {
     } catch (error: any) {
       console.error("Delete note error:", error);
     }
-  };
+  }
 
   return {
     notes: filteredAndSortedNotes,
+    pinnedNotes,
+    recentNotes,
     folders,
     categories,
     activeFolderId,

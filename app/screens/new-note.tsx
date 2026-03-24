@@ -43,7 +43,7 @@ export default function NewNoteScreen() {
               backgroundColor="$backgroundFocus"
               onPress={() => router.back()}
             />
-            <H3 fontWeight="bold">New Note</H3>
+            <Text fontSize={20} fontWeight="bold" color="$color">New Note</Text>
             <Button 
                 size="$3"
                 circular

@@ -4,7 +4,7 @@
 [![React Native 0.81](https://img.shields.io/badge/React%20Native-0.81-61dafb.svg?logo=react&logoColor=black)](https://reactnative.dev/)
 [![Tamagui](https://img.shields.io/badge/UI-Tamagui-FF6154.svg?logo=tamagui&logoColor=white)](https://tamagui.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![License: Private](https://img.shields.io/badge/License-Private-red.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **EchoNotes** is a production-grade, AI-powered voice note-taking application designed for elite efficiency. It captures raw audio and leverages Gemini AI to synthesize structured, actionable intelligence—transforming scattered thoughts into organized success.
 
@@ -66,7 +66,7 @@ EchoNotes follows a **feature-driven modular architecture** to ensure scalabilit
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/okaady/echo-notes.git
+   git clone https://github.com/okaadyx/echo-notes.git
    cd echo-notes
    ```
 
@@ -152,17 +152,16 @@ Refer to `eas.json` for build profiles and secret management.
 | **Tamagui Build Errors** | Clear cache: `npx expo start --clear`. |
 
 ---
-
 ## 📄 License
 
-Internal Project - All Rights Reserved. (Private)
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
 ## 📞 Support / Contact
 
-- **Maintained by**: [Okaady](https://github.com/okaady)
-- **Issue Tracker**: GitHub Issues or contact [support@okaady.com]
+*Maintained by [Okaadyx](https://github.com/okaadyx)*
+- **Issue Tracker**: GitHub Issues or contact [support@okaadyx.com]
 
 ---
 *Built with ❤️ for better productivity.*

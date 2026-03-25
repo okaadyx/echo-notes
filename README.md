@@ -1,37 +1,168 @@
-# EchoNotes Frontend 👋
+# EchoNotes 👋
 
-AI-powered voice note-taking application built with React Native (Expo) and Tamagui.
+[![Expo SDK 54](https://img.shields.io/badge/Expo-54.0-000020.svg?logo=expo&logoColor=white)](https://expo.dev/)
+[![React Native 0.81](https://img.shields.io/badge/React%20Native-0.81-61dafb.svg?logo=react&logoColor=black)](https://reactnative.dev/)
+[![Tamagui](https://img.shields.io/badge/UI-Tamagui-FF6154.svg?logo=tamagui&logoColor=white)](https://tamagui.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![License: Private](https://img.shields.io/badge/License-Private-red.svg)](LICENSE)
 
-## Architecture
+**EchoNotes** is a production-grade, AI-powered voice note-taking application designed for elite efficiency. It captures raw audio and leverages Gemini AI to synthesize structured, actionable intelligence—transforming scattered thoughts into organized success.
 
-The project uses a production-grade, feature-based directory structure:
+---
 
-- `app/`: Expo Router tabs and screens.
-- `components/features/`: Complex components grouped by feature (notes, ai).
-- `components/layout/`: Global UI elements like headers and logos.
-- `components/ui/`: Reusable primitive components.
-- `hooks/`: Domain-specific custom hooks (useNotes, etc.).
-- `services/`: API client and external integrations.
-- `store/`: Redux Toolkit for global state management.
+## 📌 Overview
 
-## Getting Started
+EchoNotes exists to bridge the gap between spoken ideas and structured documentation. In a fast-paced world, typing is a bottleneck. EchoNotes allows users to record their voice and automatically receive high-quality transcripts, key point summaries, and Action items.
 
-1. Install dependencies:
+**Key Value Proposition:** 
+- **Efficiency**: Zero-effort structured notes from voice.
+- **Organization**: Clean, folder-based management with smart categorization.
+- **Intelligence**: Context-aware AI synthesis using Gemini.
+
+---
+
+## ✨ Features
+
+- **🎙️ High-Fidelity Recording**: Seamless audio capture with pre-processing for AI clarity.
+- **🤖 Gemini AI Synthesis**: Automatic generation of transcripts, action items, and key points.
+- **📁 Advanced Organization**: Custom folders, note pinning, and favorite management.
+- **🔍 Global Search**: Fast, optimized search across all note metadata and content.
+- **🔒 Security**: Persistent session management with `expo-secure-store`.
+- **🌐 Offline Resilience**: Robust background sync and offline-first data handling.
+- **🎨 Premium UI**: Performance-tuned design system built with **Tamagui**.
+
+---
+
+## 🏗️ Architecture
+
+EchoNotes follows a **feature-driven modular architecture** to ensure scalability and developer efficiency:
+
+- **Routing**: File-based navigation via `Expo Router`.
+- **State Layer**: Hybrid strategy using `TanStack Query` (Server state) and `Redux Toolkit` (Client state).
+- **Service Layer**: Centralized API clients using `Axios` with tailored interceptors.
+- **Media Pipeline**: Local audio caching and multipart uploads for large file stability.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React Native, Expo SDK 54, TypeScript
+- **State Management**: Redux Toolkit, TanStack Query v5
+- **UI/UX**: Tamagui, Lucide Icons, Reanimated
+- **Networking**: Axios, Expo File System
+- **Storage**: Expo Secure Store, AsyncStorage
+- **AI**: Gemini AI (via custom backend integration)
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- **Node.js**: LTS version (18.x or 20.x recommended)
+- **Expo Go**: Available on iOS and Android App Stores
+- **Backend API**: A running instance of the EchoNotes API
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/okaady/echo-notes.git
+   cd echo-notes
+   ```
+
+2. **Install dependencies:**
    ```bash
    npm install
    ```
 
-2. Set up environment variables:
-   Create a `.env` file with `EXPO_PUBLIC_API_URL`.
+3. **Configure Environment Variables:**
+   Create a `.env` file in the root directory and add:
+   ```env
+   EXPO_PUBLIC_API_URL=https://api.echonotes.com/v1
+   ```
 
-3. Start the app:
+4. **Launch Application:**
    ```bash
    npx expo start
    ```
 
-## Key Technologies
-- **React Native (Expo)**: Framework for cross-platform development.
-- **Tamagui**: Design system and UI kit.
-- **TanStack Query (v5)**: Data fetching and caching.
-- **Redux Toolkit**: Client-side state management.
-- **Lucide Icons**: Icon library.
+---
+
+## 📡 API Documentation
+
+Centralized API access via the `api` service singleton.
+
+### Key Endpoints
+
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/auth/login` | `POST` | Authenticate user and persist JWT. |
+| `/notes/` | `GET` | List notes with folder filtering. |
+| `/ai/generate-notes` | `POST` | Process multipart audio into structured notes. |
+
+#### Example: Generate AI Notes
+```typescript
+const response = await api.ai.generateNotes(audioUri);
+// Returns structured object with { transcript, key_points, action_items }
+```
+
+---
+
+## 🧪 Testing
+
+Execute the test suite and linting tools:
+
+```bash
+# Run linting
+npm run lint
+
+# Run type checks
+tsc --noEmit
+```
+
+---
+
+## 📦 Deployment
+
+Optimized for **EAS (Expo Application Services)**:
+
+- **Android Production**: `eas build --platform android --profile production`
+- **iOS Production**: `eas build --platform ios --profile production`
+
+Refer to `eas.json` for build profiles and secret management.
+
+---
+
+## 🤝 Contributing
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 🐛 Troubleshooting
+
+| Issue | Potential Fix |
+| :--- | :--- |
+| **API 401 Unauthorized** | Ensure you are logged in and the token is in `SecureStore`. |
+| **Audio Upload Failure** | Check `EXPO_PUBLIC_API_URL` and internet connectivity. |
+| **Tamagui Build Errors** | Clear cache: `npx expo start --clear`. |
+
+---
+
+## 📄 License
+
+Internal Project - All Rights Reserved. (Private)
+
+---
+
+## 📞 Support / Contact
+
+- **Maintained by**: [Okaady](https://github.com/okaady)
+- **Issue Tracker**: GitHub Issues or contact [support@okaady.com]
+
+---
+*Built with ❤️ for better productivity.*

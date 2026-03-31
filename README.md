@@ -96,7 +96,7 @@ You can download the compiled Android APK directly to test the application:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/okaadyx/echo-notes.git
+   git clone https://github.com/okaadyx/Echo_Notes.git
    cd echo-notes
    ```
 
